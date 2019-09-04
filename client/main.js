@@ -32,25 +32,51 @@ const addTodo = (input) => {
   let editBtn = document.createElement('button');
   editBtn.innerText = 'edit';
   editBtn.classList.add('btn', 'edit-btn');
-  editBtn.addEventListener('click', updateTodo);
+  editBtn.addEventListener('click', function () {
+    updateTodo(this);
+  });
   // create delete button
   let deleteBtn = document.createElement('button');
   deleteBtn.innerText = 'delete';
   deleteBtn.classList.add('btn', 'delete-btn');
-  deleteBtn.addEventListener('click', deleteTodo);
+  deleteBtn.addEventListener('click', function (evet) {
+    deleteTodo(this)
+  });
+
+  // create radio button "yes" and "no"
+  const div = document.createElement('div');
+  const yes = document.createElement('input');
+  yes.type = 'radio';
+  yes.name = 'yes';
+  yes.value = 'Yes';
+
+  const no = document.createElement('input');
+  no.type = 'radio';
+  no.name = 'no';
+  no.value = 'No';
+
+  div.appendChild(yes);
+  div.appendChild(no);
 
   let span = document.createElement('span');
   let ul = document.querySelector('ul');
   let newTodo = input.value;
+  span.innerText = newTodo;
   input.value = '';
 
-  ul.appendChild(li).append(span, newTodo, editBtn, deleteBtn);
+  ul.appendChild(li).append(div, span, editBtn, deleteBtn);
 };
 
-const updateTodo = () => {
-
+const updateTodo = (event) => {
+  let update = prompt('Please update your todo');
+  event.parentNode.firstChild.innerText = update;
+    // need to implement no input from user
+      // user must enter new update, or be given rejection
 };
 
-const deleteTodo = () => {
-  console.log(this, 'delete');
+const deleteTodo = (event) => {
+  const parentNode = document.getElementsByTagName('ul');
+  let removed = parentNode[0].removeChild(event.parentNode);
+  return removed;
+
 };
