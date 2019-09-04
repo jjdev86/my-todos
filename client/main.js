@@ -1,4 +1,7 @@
-// Add evenListener to Add button
+/**
+ * ADD EVENTS TO INPUT AND BUTTONS
+ */
+// Add event to Add button
 let addButton = document.getElementById('add-todo');
 // add event listener
 addButton.addEventListener('click', function () {
@@ -6,7 +9,7 @@ addButton.addEventListener('click', function () {
   addTodo(input)
 });
 
-// add evenlistener on keypress
+// Add Event to input on keyPress
 let input = document.querySelector("input[type='text']");
 
 // handle event on keypress
@@ -15,7 +18,12 @@ input.addEventListener('keypress', function (keyPressed) {
     // addTodo(this)
     addTodo(this)
   }
-})
+});
+
+
+
+
+
 
 // Append message to <ul>
 const addTodo = (input) => {
@@ -30,12 +38,12 @@ const addTodo = (input) => {
   deleteBtn.innerText = 'delete';
   deleteBtn.classList.add('btn', 'delete-btn');
   deleteBtn.addEventListener('click', deleteTodo);
+
   let span = document.createElement('span');
   let ul = document.querySelector('ul');
-  debugger;
   let newTodo = input.value;
-
   input.value = '';
+
   ul.appendChild(li).append(span, newTodo, editBtn, deleteBtn);
 };
 
