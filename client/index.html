@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <script src="functions.js"></script> -->
     <title>my-Todos</title>
 </head>
 
@@ -22,9 +23,11 @@
             <li><span>Clean the bathroom</span></li> -->
         </ul>
     </div>
-    <button class="btn delete-all-todos">Delete All Todos</button>
-    <button class="btn complete-todos">Completed</button>
-    <button class="btn incomplete-todos">Incomplete</button>
+
+    <button class="btn delete-displayAll-todos" onclick="displayAllTodos()">All Todos</button>
+    <button class="btn delete-all-todos" onclick="deleteAllTodos()">Delete All Todos</button>
+    <button class="btn complete-todos" onclick="displayCompletedTodos()">Completed</button>
+    <button class="btn incomplete-todos" onclick="displayIncompleteTodos()">Incomplete</button>
     <script src="main.js"></script>
 </body>
 

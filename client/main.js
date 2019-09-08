@@ -9,7 +9,19 @@ let addButton = document.getElementById('add-todo');
 // add event listener
 addButton.addEventListener('click', function () {
   let input = document.querySelector("input[type='text']");
-  addTodo(input)
+  // addTodo(input)
+  if (input.value.length) {
+    let id = Number(localStorage.getItem('todoId')) + 1;
+    const allTodos = JSON.parse(localStorage.getItem('allTodos'));
+    allTodos.push({id: id, nodeText: input.value, complete: false});
+    // incompleteTodos.push([id, this.value]);
+    localStorage.setItem('todoId', id);
+    localStorage.setItem('allTodos', JSON.stringify(allTodos));
+    addTodo(input, id)
+  } else {
+    console.log('add a todo');
+    // span message below input box to add todo
+  }
 });
 
 // Add Event to input on keyPress
@@ -18,39 +30,61 @@ let input = document.querySelector("input[type='text']");
 input.addEventListener('keypress', function (keyPressed) {
   if (keyPressed.charCode === 13) {
     // addTodo(this)
-    let id = Number(localStorage.getItem('todoId')) + 1;
-
-    const allTodos = JSON.parse(localStorage.getItem('allTodos'));
-    const incompleteTodos = JSON.parse(localStorage.getItem('incompleteTodos'));
-
-    // allTodos.push([id, this.value]);
-    allTodos.push({id: id, nodeText: this.value, complete: false});
-    // incompleteTodos.push([id, this.value]);
-    incompleteTodos.push({id : id, nodeText:  this.value, complete: false});
-    localStorage.setItem('todoId', id);
-    localStorage.setItem('allTodos', JSON.stringify(allTodos));
-    localStorage.setItem('incompleteTodos', JSON.stringify(incompleteTodos))
-    addTodo(this, id)
+    if (this.value.length) {
+      let id = Number(localStorage.getItem('todoId')) + 1;
+      const allTodos = JSON.parse(localStorage.getItem('allTodos'));
+      allTodos.push({id: id, nodeText: this.value, complete: false});
+      // incompleteTodos.push([id, this.value]);
+      localStorage.setItem('todoId', id);
+      localStorage.setItem('allTodos', JSON.stringify(allTodos));
+      addTodo(this, id)
+    } else {
+      console.log('add a todo');
+    }
   }
 });
+
+/******************************************************************************\
+ * =======================ALTER TODO =================== *
+ ******************************************************************************/
+ 
+const updateTodo = () => {
+  let update = prompt('Please update your todo');
+  // get todo id
+  const id = Number(event.target.parentNode.parentNode.id);
+  const allTodos = JSON.parse(localStorage.getItem('allTodos'));
+
+  allTodos.forEach(todo => {
+    if (todo.id === id) {
+      todo.nodeText = update;
+    }
+  });
+  localStorage.setItem('allTodos', JSON.stringify(allTodos));
+  event.target.previousSibling.innerText = update;
+
+};
+
+const deleteTodo = () => {
+  const parentNode = document.querySelector('ul');
+  const id = Number(event.target.parentNode.parentNode.id);
+  const allTodos = JSON.parse(localStorage.getItem('allTodos'));
+
+  allTodos.forEach((todo, index) => {
+    if (todo.id === id) {
+      allTodos.splice(index, 1);
+    }
+  });
+  localStorage.setItem('allTodos', JSON.stringify(allTodos));
+  let removed = parentNode.removeChild(event.target.parentNode.parentNode);
+
+  return removed;
+};
+
 
 /******************************************************************************\
  * =======================FILTER BY TODO STATUS FUNCTIONS =================== *
  ******************************************************************************/
 
-const updateTodo = () => {
-  let update = prompt('Please update your todo');
-  console.log(event.target.parentNode, `parent node of ul`)
-  console.log(event.target.previousSibling, `sibling?`)
-  event.target.previousSibling.innerText = update;
-  // event.parentNode.firstChild.innerText = update;
-};
-
-const deleteTodo = () => {
-  const parentNode = document.querySelector('ul');
-  let removed = parentNode.removeChild(event.target.parentNode.parentNode);
-  return removed;
-};
 
 const completedTodo = (e, id) => {
   id = Number(id);
@@ -58,7 +92,7 @@ const completedTodo = (e, id) => {
   // disable edit button
   e.parentNode.childNodes[2].style.display = 'none';
   e.value = 'yes';
-
+  e.checked = true;
   const allTodos = JSON.parse(localStorage.getItem('allTodos'));
   // update todo to complete
   allTodos.forEach((todo, index) => {
@@ -68,13 +102,15 @@ const completedTodo = (e, id) => {
   });
   //update completeTodos with new 
   localStorage.setItem('allTodos', JSON.stringify(allTodos));
+  // displayIncompleteTodos();
 }
 
 const incompleteTodo = (e, id) => {
+
   id = Number(id);
   e.parentNode.childNodes[1].style.cssText = "text-decoration: none";
   e.parentNode.childNodes[2].style.display = "inline-block";
-  e.value = 'no';
+  e.value = 'false';
 
   const allTodos = JSON.parse(localStorage.getItem('allTodos'));
   allTodos.forEach((todo, index) => {
@@ -83,7 +119,7 @@ const incompleteTodo = (e, id) => {
     }
   });
   localStorage.setItem('allTodos', JSON.stringify(allTodos));
-
+  // displayCompletedTodos();
 };
 
 
@@ -105,10 +141,8 @@ const displayAllTodos = () => {
 };
 
 const deleteAllTodos = () => {
-  console.log('deleteAll todos')
   localStorage.setItem('allTodos', "[]");
   document.querySelector('ul').innerHTML = '';
-
 };
 
 
@@ -187,6 +221,7 @@ const displayCompletedTodos = () => {
      span.style.cssText = "text-decoration: line-through";
      checkbox.checked = true;
    }
+
    const edit = editBtn();
    checkbox.value = todo.complete;
    const delBtn = deletebtn();
@@ -220,12 +255,12 @@ const checkBox = () => {
   const checkbox = document.createElement('input');
   checkbox.type = 'checkbox';
   checkbox.name = 'completed';
-  checkbox.value = 'no';
+  checkbox.value = 'false';
   // // eventListener that determine if todo is completed
   checkbox.addEventListener('click', function (e) {
     // on checkbox check, the todo will be marked completed
     let id = e.target.parentNode.parentNode.id
-    if (this.value === 'no') {
+    if (this.value === 'false') {
       console.log(this, `checkbox?`)
       completedTodo(this, id)  
     } else {
