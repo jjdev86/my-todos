@@ -1,9 +1,4 @@
-// Global Variables to Tack Todos
-// window.completed = [];
-localStorage.setItem('completedTodos', JSON.stringify([]));
-// window.incomple = [];
-localStorage.setItem('incompleteTodos', JSON.stringify([]));
-// window.allTodos = [];
+
 localStorage.setItem('allTodos', JSON.stringify([]));
 localStorage.setItem('todoId', 0); 
 /**
@@ -28,8 +23,10 @@ input.addEventListener('keypress', function (keyPressed) {
     const allTodos = JSON.parse(localStorage.getItem('allTodos'));
     const incompleteTodos = JSON.parse(localStorage.getItem('incompleteTodos'));
 
-    allTodos.push([id, this.value]);
-    incompleteTodos.push([id, this.value]);
+    // allTodos.push([id, this.value]);
+    allTodos.push({id: id, nodeText: this.value, complete: false});
+    // incompleteTodos.push([id, this.value]);
+    incompleteTodos.push({id : id, nodeText:  this.value, complete: false});
     localStorage.setItem('todoId', id);
     localStorage.setItem('allTodos', JSON.stringify(allTodos));
     localStorage.setItem('incompleteTodos', JSON.stringify(incompleteTodos))
@@ -37,74 +34,21 @@ input.addEventListener('keypress', function (keyPressed) {
   }
 });
 
+/******************************************************************************\
+ * =======================FILTER BY TODO STATUS FUNCTIONS =================== *
+ ******************************************************************************/
 
-
-
-
-
-
-const addTodo = (input, id) => {
-  let li = document.createElement('li');
-  li.setAttribute('id', id);
-
-  // create edit button with eventListner
-  let editBtn = document.createElement('button');
-  editBtn.innerText = 'edit';
-  editBtn.classList.add('btn', 'edit-btn');
-  editBtn.addEventListener('click', function () {
-    updateTodo(this);
-  });
-
-  // create delete button with eventListner
-  let deleteBtn = document.createElement('button');
-  deleteBtn.innerText = 'delete';
-  deleteBtn.classList.add('btn', 'delete-btn');
-  deleteBtn.addEventListener('click', function (evet) {
-    deleteTodo(this)
-  });
-
-  // create radio button "yes" and "no"
-  const div = document.createElement('div');
-  const checkbox = document.createElement('input');
-  checkbox.type = 'checkbox';
-  checkbox.name = 'completed';
-  checkbox.value = 'no';
-  // eventListener that determine if todo is completed
-  checkbox.addEventListener('click', function (e) {
-    // on checkbox check, the todo will be marked completed
-    if (this.value === 'no') {
-      console.log(this, `checkbox?`)
-
-      let id = e.target.parentNode.parentNode.id
-      completedTodo(this, id)  
-    } else {
-      incompleteTodo(this, id);
-    }
-  })
-
-  let span = document.createElement('span');
-  let ul = document.querySelector('ul');
-  let newTodo = input.value;
-  span.innerText = newTodo;
-  input.value = '';
-  // append elements to div
-  div.append(checkbox, span, editBtn, deleteBtn)
-  // append div to ul parent list
-  ul.appendChild(li).append(div);
-  // store todo in client storage
-};
-
-const updateTodo = (event) => {
+const updateTodo = () => {
   let update = prompt('Please update your todo');
-  
-  event.parentNode.firstChild.innerText = update;
-    // need to implement no input from user
-      // user must enter new update, or be given rejection
+  console.log(event.target.parentNode, `parent node of ul`)
+  console.log(event.target.previousSibling, `sibling?`)
+  event.target.previousSibling.innerText = update;
+  // event.parentNode.firstChild.innerText = update;
 };
 
-const deleteTodo = (event) => {
-  const parentNode = document.getElementsByTagName('ul');
-  let removed = parentNode[0].removeChild(event.parentNode);
+const deleteTodo = () => {
+  const parentNode = document.querySelector('ul');
+  let removed = parentNode.removeChild(event.target.parentNode.parentNode);
   return removed;
 };
 
@@ -115,25 +59,15 @@ const completedTodo = (e, id) => {
   e.parentNode.childNodes[2].style.display = 'none';
   e.value = 'yes';
 
-  // remove todo from incompletesTodos
-  const incomplete = JSON.parse(localStorage.getItem('incompleteTodos'));
-  let todoRemoved; 
-  incomplete.forEach((todo, index) => {
-    if (todo[0] === id) {
-      todoRemoved = todo;
-      // remove the todo from incomplete todos
-      incomplete.splice(index, 1);
+  const allTodos = JSON.parse(localStorage.getItem('allTodos'));
+  // update todo to complete
+  allTodos.forEach((todo, index) => {
+    if (todo.id === id) {
+      todo.complete = true;
     }
   });
-  // update localStorage incompleteTodos
-  localStorage.setItem('incompleteTodos', JSON.stringify(incomplete));
-  // add todo to competedTodos
-  const completed = JSON.parse(localStorage.getItem('completedTodos'));
-  completed.push(todoRemoved);
-  // UPDATE localStorage completedTodos
-  localStorage.setItem('completedTodos', JSON.stringify(completed));
-  // strike todo text
-  // style="text-decoration: line-through;"
+  //update completeTodos with new 
+  localStorage.setItem('allTodos', JSON.stringify(allTodos));
 }
 
 const incompleteTodo = (e, id) => {
@@ -142,66 +76,123 @@ const incompleteTodo = (e, id) => {
   e.parentNode.childNodes[2].style.display = "inline-block";
   e.value = 'no';
 
-  // get all completed todos, and remove todo
-  const completed = JSON.parse(localStorage.getItem('completedTodos'));
-  let todoRemoved; 
-  completed.forEach((todo, index) => {
-    if (todo[0] === id) {
-      todoRemoved = todo;
-      // remove the todo from incomplete todos
-      completed.splice(index, 1);
+  const allTodos = JSON.parse(localStorage.getItem('allTodos'));
+  allTodos.forEach((todo, index) => {
+    if (todo.id === id) {
+      todo.complete = false;
     }
   });
-  // UPDATE completedTodos storage
-  localStorage.setItem('completedTodos', JSON.stringify(completed));
-  // Get incomplete todos, add todoRemoved to incompleteTodos
-  const incomplete = JSON.parse(localStorage.getItem('incompleteTodos'));
-  incomplete.push(todoRemoved);
-  // UPDATE incompleteTodos
-  localStorage.setItem('incompleteTodos', JSON.stringify(incomplete));
+  localStorage.setItem('allTodos', JSON.stringify(allTodos));
+
 };
 
 
 const displayAllTodos = () => {
-  console.log(`displayAllTodos`);
+
   // get all todos from storage
   const todos = JSON.parse(localStorage.getItem('allTodos'));
   document.querySelector('ul').innerHTML = '';
 
-  for (let i = 0; i < todos.length; i++) {
-    let todo = todos[i]; // [1, 'hi there']
-
+  todos.forEach((todo, index) => {
     const ul = document.querySelector("ul");
     const li = document.createElement('li');
-    li.setAttribute('id', todo[0]);
-    const div = document.createElement('div');
-    const span = document.createElement('span');
-    span.innerText = todo[1];
-    const checkbox = checkBox();
-    const edit = editBtn();
-    const delBtn = deletebtn();
-    div.append(checkbox, span, edit, delBtn);
+    li.setAttribute('id', todo.id);
+    // creates a todo and appends to div
+    const div = createFilteredTodo(todo);
     ul.appendChild(li).append(div);
-}
+  });
 
 };
 
 const deleteAllTodos = () => {
   console.log('deleteAll todos')
-  // let ul = document.querySelector('ul');
+  localStorage.setItem('allTodos', "[]");
   document.querySelector('ul').innerHTML = '';
-  // GET all todos from storage
 
+};
+
+
+/******************************************************************************\
+ * ============================HELPER FUNCTIONS================================/
+ ******************************************************************************/
+
+const addTodo = (input, id) => {
+  let li = document.createElement('li');
+  li.setAttribute('id', id);
+
+  // create edit button with eventListner
+  const editButton = editBtn();
+  // create delete button with eventListner
+  const deleteButton = deletebtn();
+  // create checkbox
+  const checkbox = checkBox();
+  // create span tag
+  const span = document.createElement('span');
+  // div to contain checkbox, span, edit and delete buttons
+  const div = document.createElement('div');
+  // set input value to span tag
+  span.innerText = input.value;
+  // clear input text
+  input.value = '';
+
+  const ul = document.querySelector('ul');
+  // append elements to div
+  div.append(checkbox, span, editButton, deleteButton)
+  // append div to li and li to ul
+  ul.appendChild(li).append(div);
+  // store todo in client storage
 };
 
 const displayCompletedTodos = () => {
- console.log(`display all completed todos`);
-};
-
-const displayIncompleteTodos = () => {
-  console.log('display all incompleteTodos');
-};
-
+  const todos = JSON.parse(localStorage.getItem('allTodos'));
+  document.querySelector('ul').innerHTML = '';
+ 
+  todos.forEach((todo, index) => {
+ 
+    if (todo.complete) {
+     const ul = document.querySelector("ul");
+     const li = document.createElement('li');
+     li.setAttribute('id', todo.id);
+     // creates a todo and appends to div
+     let div = createFilteredTodo(todo);
+     ul.appendChild(li).append(div);
+    }
+  });
+ };
+ 
+ const displayIncompleteTodos = () => {
+   console.log('display all incompleteTodos');
+   const todos = JSON.parse(localStorage.getItem('allTodos'));
+   document.querySelector('ul').innerHTML = '';
+ 
+   todos.forEach((todo, index) => {
+ 
+     if (!todo.complete) {
+      const ul = document.querySelector("ul");
+      const li = document.createElement('li');
+      li.setAttribute('id', todo.id);
+      // creates a todo and appends to div
+      let div = createFilteredTodo(todo);
+      ul.appendChild(li).append(div);
+     }
+   });
+ };
+ 
+ const createFilteredTodo = (todo) => {
+   const div = document.createElement('div');
+   const span = document.createElement('span');
+   span.innerText = todo.nodeText;
+   const checkbox = checkBox();
+   if (todo.complete) {
+     span.style.cssText = "text-decoration: line-through";
+     checkbox.checked = true;
+   }
+   const edit = editBtn();
+   checkbox.value = todo.complete;
+   const delBtn = deletebtn();
+   div.append(checkbox, span, edit, delBtn);
+   return div;
+ }
 
 const editBtn = () => {
   // create edit button with eventListner
