@@ -1,6 +1,7 @@
-
-localStorage.setItem('allTodos', JSON.stringify([]));
-localStorage.setItem('todoId', 0); 
+if (localStorage.getItem('allTodos') == null) {
+  localStorage.setItem('allTodos', JSON.stringify([]));
+  localStorage.setItem('todoId', 0); 
+}
 /**
  * ADD EVENTS TO INPUT AND BUTTONS
  */

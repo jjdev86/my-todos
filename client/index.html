@@ -29,6 +29,14 @@
     <button class="btn complete-todos" onclick="displayCompletedTodos()">Completed</button>
     <button class="btn incomplete-todos" onclick="displayIncompleteTodos()">Incomplete</button>
     <script src="main.js"></script>
+    <script type="text/javascript">
+        document.querySelector('ul').innerText = 'Getting Todos....'
+        setTimeout(() => {
+            document.querySelector('ul').innerText = '';
+            displayAllTodos();
+        }, 1000);
+        
+    </script>
 </body>
 
 </html>
