@@ -1,0 +1,29 @@
+ul {
+    list-style-type: none;
+}
+
+.btn {
+    text-align: center;
+    width: fit-content;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+span {
+    width: 100px;
+}
+.col-6 {
+    align-content: center;
+}
+.btn-outline-secondary {
+    margin: 0 5px 0 0;
+}
+.btn-sm {
+    height: 31px !important;
+    margin: 2px 3px 2px 2px;
+}
+/* .btn-row {
+    display: flow-root;
+} */

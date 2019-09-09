@@ -154,7 +154,6 @@ const deleteAllTodos = () => {
 const addTodo = (input, id) => {
   let li = document.createElement('li');
   li.setAttribute('id', id);
-
   // create edit button with eventListner
   const editButton = editBtn();
   // create delete button with eventListner
@@ -165,14 +164,17 @@ const addTodo = (input, id) => {
   const span = document.createElement('span');
   // div to contain checkbox, span, edit and delete buttons
   const div = document.createElement('div');
+  div.classList.add('row', 'todo-container');
   // set input value to span tag
   span.innerText = input.value;
+  span.setAttribute('class', 'col-9')
   // clear input text
   input.value = '';
 
   const ul = document.querySelector('ul');
   // append elements to div
   div.append(checkbox, span, editButton, deleteButton)
+  // div.setAttribute('class', 'todo-container', 'row');
   // append div to li and li to ul
   ul.appendChild(li).append(div);
   // store todo in client storage
@@ -190,6 +192,7 @@ const displayCompletedTodos = () => {
      li.setAttribute('id', todo.id);
      // creates a todo and appends to div
      let div = createFilteredTodo(todo);
+    //  div.setAttribute('class', 'todo-container');
      ul.appendChild(li).append(div);
     }
   });
@@ -208,6 +211,7 @@ const displayCompletedTodos = () => {
       li.setAttribute('id', todo.id);
       // creates a todo and appends to div
       let div = createFilteredTodo(todo);
+      // div.setAttribute('class', 'todo-container');
       ul.appendChild(li).append(div);
      }
    });
@@ -217,6 +221,7 @@ const displayCompletedTodos = () => {
    const div = document.createElement('div');
    const span = document.createElement('span');
    span.innerText = todo.nodeText;
+   span.setAttribute('class', 'col-9')
    const checkbox = checkBox();
    if (todo.complete) {
      span.style.cssText = "text-decoration: line-through";
@@ -227,6 +232,7 @@ const displayCompletedTodos = () => {
    checkbox.value = todo.complete;
    const delBtn = deletebtn();
    div.append(checkbox, span, edit, delBtn);
+   div.setAttribute('class', 'todo-container row');
    return div;
  }
 
@@ -234,7 +240,7 @@ const editBtn = () => {
   // create edit button with eventListner
   let btn = document.createElement('button');
   btn.innerText = 'edit';
-  btn.classList.add('btn', 'edit-btn');
+  btn.classList.add('btn', 'btn-outline-secondary', 'btn-sm');
   btn.addEventListener('click', function () {
     updateTodo(this);
   });
@@ -244,8 +250,8 @@ const editBtn = () => {
 const deletebtn = () => {
   // create delete button with eventListner
   let btn = document.createElement('button');
-  btn.innerText = 'delete';
-  btn.classList.add('btn', 'delete-btn');
+  btn.innerText = 'X';
+  btn.classList.add('btn', 'btn-danger', 'btn-sm');
   btn.addEventListener('click', function (evet) {
     deleteTodo(this)
   });
@@ -257,6 +263,7 @@ const checkBox = () => {
   checkbox.type = 'checkbox';
   checkbox.name = 'completed';
   checkbox.value = 'false';
+  checkbox.setAttribute('class', 'col-xs-2');
   // // eventListener that determine if todo is completed
   checkbox.addEventListener('click', function (e) {
     // on checkbox check, the todo will be marked completed

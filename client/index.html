@@ -6,28 +6,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- <script src="functions.js"></script> -->
+    <link rel = "stylesheet"
+    type = "text/css"
+    href = "main.css" />
     <title>my-Todos</title>
 </head>
 
 <body>
-    <div id="todos">
-        <h1 class="header-title">My To-Do List</h1>
-        <div>
-            <input type="text" placeholder="Add A New Todo" />
-            <button id="add-todo">Add</button>
+    <div class="container">
+        <div id="todos" class="container-fluid">
+            <div class="row justify-content-md-center">
+                <div class="col">
+                    </div>
+                    <div class="col-6" align="center">
+                        <h1 class="header-title col">My To-Do List</h1>
+                    </div>
+                    <div class="col">
+                </div>
+                <!-- <h1 class="header-title col">My To-Do List</h1> -->
+            </div>
+            <div class="row justify-content-md-center">
+                    <div class="col">
+                    </div>
+                <div class="col-6 " align="center">
+                    <input type="text" placeholder="Add A New Todo" />
+                    <button id="add-todo" class="btn btn-outline-dark">Add</button>
+                </div>
+                <div class="col">
+                    </div>
+
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <ul class="todos col col-6" align="center"></ul>
+                <div class="col"></div>
+            </div>
         </div>
-
-        <ul class="todos">
-            <!-- <li><span>Clean the kitchen</span></li>
-            <li><span>Clean the bathroom</span></li> -->
-        </ul>
+        <div class="row btn-row justify-content-md-center">
+            <div class="col col-lg-2"></div>
+            <div class="col-md-auto">
+                <button class="btn delete-displayAll-todos btn-outline-dark col" onclick="displayAllTodos()">All Todos</button>
+                <button class="btn delete-all-todos btn-outline-dark col" onclick="deleteAllTodos()">Delete All Todos</button>
+                <button class="btn complete-todos btn-outline-dark col" onclick="displayCompletedTodos()">Completed</button>
+                <button class="btn incomplete-todos btn-outline-dark col" onclick="displayIncompleteTodos()">Incomplete</button>
+            </div>
+            <div class="col col-lg-2"></div>
+        </div>
     </div>
-
-    <button class="btn delete-displayAll-todos" onclick="displayAllTodos()">All Todos</button>
-    <button class="btn delete-all-todos" onclick="deleteAllTodos()">Delete All Todos</button>
-    <button class="btn complete-todos" onclick="displayCompletedTodos()">Completed</button>
-    <button class="btn incomplete-todos" onclick="displayIncompleteTodos()">Incomplete</button>
     <script src="main.js"></script>
     <script type="text/javascript">
         document.querySelector('ul').innerText = 'Getting Todos....'
