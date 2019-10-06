@@ -8,7 +8,11 @@ ul {
 }
 
 input[type="checkbox"] {
-    margin-right: 10px;
+    margin: 8px 10px 0 0;
+    background-color: #fff;
+}
+input[type=checkbox]:checked {
+    color: #fff;
 }
 
 span {
@@ -24,6 +28,24 @@ span {
     height: 31px !important;
     margin: 2px 3px 2px 2px;
 }
+
+.todo-container {
+    background-color: #fff;
+    margin: 5px 0 5px 0;
+    box-shadow: 1px 0px 2px 1px rgba(0,0,0,0.61);
+
+}
 /* .btn-row {
     display: flow-root;
 } */
+
+.sub-header {
+height: 100%;
+padding-left: 30%;
+padding-right: 30%;
+text-align: center;
+}
+
+.header-title {
+    padding-top: 30px;
+}
