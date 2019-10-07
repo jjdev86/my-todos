@@ -1,0 +1,63 @@
+/* @import url("https://bootswatch.com/flatly/bootstrap.min.css"); */
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+  
+    > .col,
+    > [class*="col-"] {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+
+  
+.header-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.todo-container {
+    background: #EFEFEF;
+    height: 100%;
+}
+
+
+  @media screen and (max-width: 768px) {
+    .row-offcanvas {
+      position: relative;
+      -webkit-transition: all 0.25s ease-out;
+      -moz-transition: all 0.25s ease-out;
+      transition: all 0.25s ease-out;
+      background:#ecf0f1;
+    }
+  
+    .row-offcanvas-left
+    .sidebar-offcanvas {
+      left: -40%;
+    }
+  
+    .row-offcanvas-left.active {
+      left: 40%;
+    }
+  
+    .sidebar-offcanvas {
+      position: absolute;
+      top: 0;
+      width: 40%;
+      margin-left: 12px;
+    }
+  }
+  #sidebar {
+    padding:15px;
+    margin-top:0px;
+}
+
+.btn {
+    border: 1px solid grey;
+}
+
+.right-side-content {
+    background: #EFEFEF;
+    height: 100%;
+}
