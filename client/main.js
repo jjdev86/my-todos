@@ -128,10 +128,10 @@ const displayAllTodos = () => {
 
   // get all todos from storage
   const todos = JSON.parse(localStorage.getItem('allTodos'));
-  document.querySelector('ul').innerHTML = '';
+  document.getElementById("todo-list").innerHTML = '';
 
   todos.forEach((todo, index) => {
-    const ul = document.querySelector("ul");
+    const ul = document.getElementById("todo-list");
     const li = document.createElement('li');
     li.setAttribute('id', todo.id);
     // creates a todo and appends to div
@@ -152,8 +152,38 @@ const deleteAllTodos = () => {
  ******************************************************************************/
 
 const addTodo = (input, id) => {
-  let li = document.createElement('li');
-  li.setAttribute('id', id);
+  // let li = document.createElement('li');
+  // li.setAttribute('id', id);
+  // // create edit button with eventListner
+  // const editButton = editBtn();
+  // // create delete button with eventListner
+  // const deleteButton = deletebtn();
+  // // create checkbox
+  // const checkbox = checkBox();
+  // // create span tag
+  // const span = document.createElement('span');
+  // // div to contain checkbox, span, edit and delete buttons
+  // const div = document.createElement('div');
+  // div.classList.add('row', 'todo-container');
+  // // set input value to span tag
+  // span.innerText = input.value;
+  // span.setAttribute('class', 'col-9')
+  // // clear input text
+  // input.value = '';
+
+  // const ul = document.getElementById("todo-list");
+  // // append elements to div
+  // div.append(checkbox, span, editButton, deleteButton)
+  // // div.setAttribute('class', 'todo-container', 'row');
+  // // append div to li and li to ul
+  // ul.appendChild(li).append(div);
+  // store todo in client storage
+
+  // NEW WAY TO CREATE TODOS, USINV DIV INSTEAD OF UL
+  //create div
+  const div = document.createElement('div');
+  div.setAttribute('id', id);
+  div.classList.add('row', 'todo-container');
   // create edit button with eventListner
   const editButton = editBtn();
   // create delete button with eventListner
@@ -162,22 +192,14 @@ const addTodo = (input, id) => {
   const checkbox = checkBox();
   // create span tag
   const span = document.createElement('span');
-  // div to contain checkbox, span, edit and delete buttons
-  const div = document.createElement('div');
-  div.classList.add('row', 'todo-container');
   // set input value to span tag
   span.innerText = input.value;
   span.setAttribute('class', 'col-9')
   // clear input text
   input.value = '';
-
-  const ul = document.querySelector('ul');
   // append elements to div
   div.append(checkbox, span, editButton, deleteButton)
-  // div.setAttribute('class', 'todo-container', 'row');
-  // append div to li and li to ul
-  ul.appendChild(li).append(div);
-  // store todo in client storage
+  document.getElementById("div-container").append(div);
 };
 
 const displayCompletedTodos = () => {
