@@ -9,6 +9,7 @@
       <link rel="stylesheet" href="css/bootstrap.min.css" />
       <!-- <link rel="stylesheet" href="css/custom.css"> -->
       <link rel="stylesheet" type="text/css" href="main1.css" />
+      <link href="css/open-iconic-bootstrap.css" rel="stylesheet">
       <title>my-Todos</title>
     </head>
   </head>
@@ -85,23 +86,27 @@
         >
         <div class="sidebar-nav">
             <div class="nav">
-                <div class="container">
-
-                    <div class="row">
-                        <button class="btn col-xs-3 col-xs-3">icon</button>
-                        <button type="button" class="btn col-xs-3 col-sm-9">All Todos</button>
+                <div class="container custom-container">
+                    <div class="row custom-div">
+                        <!-- <button class="btn col-xs-3 col-xs-3 custom-btn">icon</button> -->
+                        <!-- <span class="oi oi-trash col-xs-3 col-xs-3"></span> -->
+                        <img class="col-xs-3 col-xs-3 custom-icon iconic iconic-sm" src="open-iconic/svg/trash.svg">
+                        <a class="col-xs-3 col-sm-9">Dispaly All</a>
                     </div>
-                    <div class="row">
-                        <button class="btn col-xs-3 col-xs-3">icon</button>
-                        <button type="button" class="btn col-xs-3 col-sm-9">Delete All</button>
+                    <div class="row custom-div">
+                        <!-- <button class="btn col-xs-3 col-xs-3">icon</button> -->
+                        <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/delete.svg">
+                        <a class=" col-xs-3 col-sm-9">Delete All</a>
                     </div>
-                    <div class="row">
-                            <button class="btn col-xs-3 col-xs-3">icon</button>
-                        <button type="button" class="btn col-xs-3 col-sm-9">Completed</button>
+                    <div class="row custom-div">
+                            <!-- <button class="btn col-xs-3 col-xs-3">icon</button> -->
+                            <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/circle-check.svg">
+                        <a class=" col-xs-3 col-sm-9">Display Completed</a>
                     </div>
-                    <div class="row">
-                            <button class="btn col-xs-3 col-xs-3">icon</button>
-                        <button type="button" class="btn col-xs-3 col-sm-9">Incomplete</button>
+                    <div class="row custom-div">
+                            <!-- <button class="btn col-xs-3 col-xs-3">icon</button> -->
+                            <img class="col-xs-3 col-xs-3 custom-icon"  src="open-iconic/svg/magnifying-glass.svg">
+                        <a class="col-xs-3 col-sm-9">Display Incomplete</a>
                     </div>
                 </div>
             </div>
@@ -114,26 +119,17 @@
             <div class="jumbotron-right">
                 <a href="#" class="visible-xs" data-toggle="offcanvas"><i class="fa fa-lg fa-reorder"></i></a>
                 <!-- <div class="container"> -->
-                        <div id="todos" class="container-fluid">
+                        <div id="todos" class="container-fluid custom-fluid">
                             <div class="row justify-content-md-center">
-                                    <div class="col">
-                                    </div>
-                                <div class="col-6 " align="center">
-                                    <input type="text" placeholder="Add A New Todo" />
-                                    <button id="add-todo" class="btn btn-outline-dark">Add</button>
+                                <div class="col-xl-9 offset-xl-3" align="center">
+                                    <input class="add-todo-input form-control mr-sm-2" type="text" placeholder="Add A New Todo" />
+                                    <button id="add-todo" class="btn btn-outline-success my-2 my-sm-0">Add</button>
                                 </div>
-                                <div class="col">
-                                    </div>
                 
                             </div>
-                            <div class="row">
-                                <div class="col"></div>
-                                <div id="div-container" class="todos col col-6" align="center">
-
-                                </div>
-                                <ul id="todo-list" class="todos col col-6" align="center"></ul>
-                                <div class="col"></div>
-                            </div>
+                            <!-- <div class="row"> -->
+                                <ul id="todo-list" class="todos col align="center"></ul>
+                            <!-- </div> -->
                         </div>
                 <!-- </div> -->
             </div>

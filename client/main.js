@@ -66,7 +66,7 @@ const updateTodo = () => {
 };
 
 const deleteTodo = () => {
-  const parentNode = document.querySelector('ul');
+  const parentNode = document.getElementById("todo-list");
   const id = Number(event.target.parentNode.parentNode.id);
   const allTodos = JSON.parse(localStorage.getItem('allTodos'));
 
@@ -134,6 +134,7 @@ const displayAllTodos = () => {
     const ul = document.getElementById("todo-list");
     const li = document.createElement('li');
     li.setAttribute('id', todo.id);
+    li.className = 'col-xl-10 offset-xl-1';
     // creates a todo and appends to div
     const div = createFilteredTodo(todo);
     ul.appendChild(li).append(div);
@@ -152,38 +153,9 @@ const deleteAllTodos = () => {
  ******************************************************************************/
 
 const addTodo = (input, id) => {
-  // let li = document.createElement('li');
-  // li.setAttribute('id', id);
-  // // create edit button with eventListner
-  // const editButton = editBtn();
-  // // create delete button with eventListner
-  // const deleteButton = deletebtn();
-  // // create checkbox
-  // const checkbox = checkBox();
-  // // create span tag
-  // const span = document.createElement('span');
-  // // div to contain checkbox, span, edit and delete buttons
-  // const div = document.createElement('div');
-  // div.classList.add('row', 'todo-container');
-  // // set input value to span tag
-  // span.innerText = input.value;
-  // span.setAttribute('class', 'col-9')
-  // // clear input text
-  // input.value = '';
-
-  // const ul = document.getElementById("todo-list");
-  // // append elements to div
-  // div.append(checkbox, span, editButton, deleteButton)
-  // // div.setAttribute('class', 'todo-container', 'row');
-  // // append div to li and li to ul
-  // ul.appendChild(li).append(div);
-  // store todo in client storage
-
-  // NEW WAY TO CREATE TODOS, USINV DIV INSTEAD OF UL
-  //create div
-  const div = document.createElement('div');
-  div.setAttribute('id', id);
-  div.classList.add('row', 'todo-container');
+  let li = document.createElement('li');
+  li.setAttribute('id', id);
+  li.className = "col-xl-10 offset-xl-1";
   // create edit button with eventListner
   const editButton = editBtn();
   // create delete button with eventListner
@@ -192,14 +164,24 @@ const addTodo = (input, id) => {
   const checkbox = checkBox();
   // create span tag
   const span = document.createElement('span');
+  // div to contain checkbox, span, edit and delete buttons
+  const div = document.createElement('div');
+  // div.classList.add('row', 'todo-container');
+  div.className = 'row todo-container';
   // set input value to span tag
   span.innerText = input.value;
-  span.setAttribute('class', 'col-9')
+  span.className = 'col-xl-9 col-lg-9 col-md-8 col-sm-6';
   // clear input text
   input.value = '';
+
+  const ul = document.getElementById("todo-list");
   // append elements to div
   div.append(checkbox, span, editButton, deleteButton)
-  document.getElementById("div-container").append(div);
+  // div.setAttribute('class', 'todo-container', 'row');
+  // append div to li and li to ul
+  ul.appendChild(li).append(div);
+  // store todo in client storage
+
 };
 
 const displayCompletedTodos = () => {
@@ -209,7 +191,7 @@ const displayCompletedTodos = () => {
   todos.forEach((todo, index) => {
  
     if (todo.complete) {
-     const ul = document.querySelector("ul");
+     const ul = document.getElementById("todo-list");
      const li = document.createElement('li');
      li.setAttribute('id', todo.id);
      // creates a todo and appends to div
@@ -228,7 +210,7 @@ const displayCompletedTodos = () => {
    todos.forEach((todo, index) => {
  
      if (!todo.complete) {
-      const ul = document.querySelector("ul");
+      const ul = document.getElementById("todo-list");
       const li = document.createElement('li');
       li.setAttribute('id', todo.id);
       // creates a todo and appends to div
@@ -243,7 +225,7 @@ const displayCompletedTodos = () => {
    const div = document.createElement('div');
    const span = document.createElement('span');
    span.innerText = todo.nodeText;
-   span.setAttribute('class', 'col-9')
+   span.className = 'col-xl-9', 'col-lg-9', 'col-md-8', 'col-sm-6';
    const checkbox = checkBox();
    if (todo.complete) {
      span.style.cssText = "text-decoration: line-through";
@@ -262,7 +244,7 @@ const editBtn = () => {
   // create edit button with eventListner
   let btn = document.createElement('button');
   btn.innerText = 'edit';
-  btn.classList.add('btn', 'btn-outline-secondary', 'btn-sm');
+  btn.className = 'btn col-xl-1 col-lg-1 col-md-1 col-sm-2 btn-outline-secondary btn-sm todo-btn';
   btn.addEventListener('click', function () {
     updateTodo(this);
   });
@@ -273,7 +255,7 @@ const deletebtn = () => {
   // create delete button with eventListner
   let btn = document.createElement('button');
   btn.innerText = 'X';
-  btn.classList.add('btn', 'btn-danger', 'btn-sm');
+  btn.className = 'col-xl-1 col-lg-1 col-md-1 col-sm-2 ';
   btn.addEventListener('click', function (evet) {
     deleteTodo(this)
   });
@@ -285,7 +267,7 @@ const checkBox = () => {
   checkbox.type = 'checkbox';
   checkbox.name = 'completed';
   checkbox.value = 'false';
-  checkbox.setAttribute('class', 'col-xs-2');
+  checkbox.className = 'col-xl-1 col-lg-1 col-md-1 col-sm-2';
   // // eventListener that determine if todo is completed
   checkbox.addEventListener('click', function (e) {
     // on checkbox check, the todo will be marked completed
