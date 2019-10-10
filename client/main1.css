@@ -146,7 +146,7 @@ hr {
   width: 20px;
   background-color: transparent;
   border-radius: 5px;
-  border: 1px solid grey;
+  border: 2px solid grey;
 }
 .checkbox-label .checkbox-custom::after {
   position: absolute;
@@ -156,8 +156,8 @@ hr {
   height: 0px;
   width: 0px;
   border-radius: 5px;
-  border: solid #009bff;
-  border-width: 0px 3px 3px 0;
+  border: 1px solid #009bff;
+  border-width: 0px 4px 4px 0;
   -webkit-transform: rotate(0deg) scale(0);
   -ms-transform: rotate(0deg) scale(0);
   transform: rotate(0deg) scale(0);
@@ -167,9 +167,10 @@ hr {
 .checkbox-label input:checked ~ .checkbox-custom {
   background-color: #009bff;
   border-radius: 5px;
+
   -webkit-transform: rotate(0deg) scale(1);
   -ms-transform: rotate(0deg) scale(1);
-  transform: rotate(0deg) scale(1);
+  transform: rotate(0deg) scale(1.2);
   opacity: 1;
   border: 2px solid #fff;
 }
@@ -184,7 +185,7 @@ hr {
   width: 6px;
   height: 12px;
   border: solid #fff;
-  border-width: 0 2px 2px 0;
+  border-width: 0 3px 3px 0;
   background-color: transparent;
   border-radius: 0px;
 }
