@@ -92,11 +92,13 @@ const deleteTodo = () => {
  ******************************************************************************/
 
 
-const completedTodo = (e, id) => {
+const completedTodo = (e, span, id) => {
   id = Number(id);
-  e.parentNode.childNodes[1].style.cssText = "text-decoration: line-through";
+  console.log(e, `event`)
+  // e.parentNode.childNodes[1].style.cssText = "text-decoration: line-through";
+  span.style.cssText = "text-decoration: line-through"
   // disable edit button
-  e.parentNode.childNodes[2].style.display = 'none';
+  span.parentNode.childNodes[2].style.display = 'none';
   e.value = 'yes';
   e.checked = true;
   const allTodos = JSON.parse(localStorage.getItem('allTodos'));
@@ -111,11 +113,13 @@ const completedTodo = (e, id) => {
   // displayIncompleteTodos();
 }
 
-const incompleteTodo = (e, id) => {
+const incompleteTodo = (e, span, id) => {
 
   id = Number(id);
-  e.parentNode.childNodes[1].style.cssText = "text-decoration: none";
-  e.parentNode.childNodes[2].style.display = "inline-block";
+  // e.parentNode.childNodes[1].style.cssText = "text-decoration: none";
+  span.style.cssText = "text-decoration: none";
+  console.log(e.parentNode, 'line 121 incomplete');
+  span.parentNode.childNodes[2].style.display = "inline-block";
   e.value = 'false';
 
   const allTodos = JSON.parse(localStorage.getItem('allTodos'));
@@ -295,21 +299,50 @@ const deletebtn = () => {
 };
 
 const checkBox = () => {
+  const label = document.createElement('label');
+  label.className = 'checkbox-label col-xl-1 col-lg-1 col-md-1 col-sm-2';
   const checkbox = document.createElement('input');
+
+
+
+
+
+
   checkbox.type = 'checkbox';
   checkbox.name = 'completed';
   checkbox.value = 'false';
-  checkbox.className = 'col-xl-1 col-lg-1 col-md-1 col-sm-2';
+  checkbox.className = 'col-xl-1 col-lg-1 col-md-1 col-sm-2 checkbox-label';
   // // eventListener that determine if todo is completed
   checkbox.addEventListener('click', function (e) {
     // on checkbox check, the todo will be marked completed
-    let id = e.target.parentNode.parentNode.id
-    if (this.value === 'false') {
-      console.log(this, `checkbox?`)
-      completedTodo(this, id)  
-    } else {
-      incompleteTodo(this, id);
+    // console.log(e, `event triggered`)
+    // console.log(this, `this val`)
+    let nodes = e.target.parentNode.parentNode.childNodes;
+    let spanNode;
+    for (let i = 0; i < nodes.length; i++) {
+      if (nodes[i].localName == "span") {
+        spanNode = nodes[i];
+      }
     }
-  })
-  return checkbox;
+    // console.log(spanNode, `where are we in the tree`)
+    let id = e.target.parentNode.parentNode.parentNode.id
+    // console.log(id, `todo ID`)
+    console.log(spanNode,`this value`)
+    if (this.value === 'false') {
+      // console.log(this, `checkbox?`)
+      // completedTodo(this, id) 
+      console.log(`box was checked as completed`) 
+      completedTodo(this, spanNode, id);
+    } else {
+      // incompleteTodo(this, id);
+      console.log(`box was checked as incompleted`) 
+      incompleteTodo(this, spanNode, id);
+    }
+  });
+  const span = document.createElement('span');
+  span.className = 'checkbox-custom checkbox-label';
+  label.append(checkbox, span);
+
+  return label;
+  // return checkbox;
 };
