@@ -65,16 +65,28 @@
     display: table;
 }
 
-li {
+.li {
+  width: 80%;
+  padding-right: 0px;
+  padding-left: 0px;
+  list-style: none;
+  /* overflow: auto; */
+
+  /* display: block; */
+  overflow: auto;
+}
+
+li{
+  list-style: none;
+}
+/* li {
     width: 80%;
     padding-right: 0px;
     padding-left: 0px;
     list-style: none;
-    /* overflow: auto; */
 
-    /* display: block; */
     overflow: auto;
-}
+} */
 
 .todo-container {
     background: #fff;

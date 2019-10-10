@@ -48,21 +48,26 @@ input.addEventListener('keypress', function (keyPressed) {
 /******************************************************************************\
  * =======================ALTER TODO =================== *
  ******************************************************************************/
- 
-const updateTodo = () => {
-  let update = prompt('Please update your todo');
-  // get todo id
-  const id = Number(event.target.parentNode.parentNode.id);
-  const allTodos = JSON.parse(localStorage.getItem('allTodos'));
 
+
+
+const updateTodo = (id, currentValue) => {
+  // get Modal input value
+  let update = document.getElementById('modal-input');
+  const allTodos = JSON.parse(localStorage.getItem('allTodos'));
+  
   allTodos.forEach(todo => {
     if (todo.id === id) {
-      todo.nodeText = update;
+      todo.nodeText = update.value;
     }
   });
   localStorage.setItem('allTodos', JSON.stringify(allTodos));
-  event.target.previousSibling.innerText = update;
 
+  var myModal = document.getElementById('save-modal');
+  myModal.setAttribute("data-dismiss", "modal");
+  update.value = '';
+  // console.log(update., 'test');
+  displayAllTodos();
 };
 
 const deleteTodo = () => {
@@ -134,7 +139,7 @@ const displayAllTodos = () => {
     const ul = document.getElementById("todo-list");
     const li = document.createElement('li');
     li.setAttribute('id', todo.id);
-    li.className = 'col-xl-10 offset-xl-1';
+    li.className = 'col-xl-10 offset-xl-1 li';
     // creates a todo and appends to div
     const div = createFilteredTodo(todo);
     ul.appendChild(li).append(div);
@@ -143,8 +148,10 @@ const displayAllTodos = () => {
 };
 
 const deleteAllTodos = () => {
+
   localStorage.setItem('allTodos', "[]");
-  document.querySelector('ul').innerHTML = '';
+  document.getElementById('todo-list').innerHTML = '';
+
 };
 
 
@@ -155,7 +162,7 @@ const deleteAllTodos = () => {
 const addTodo = (input, id) => {
   let li = document.createElement('li');
   li.setAttribute('id', id);
-  li.className = "col-xl-10 offset-xl-1";
+  li.className = "col-xl-10 offset-xl-1 li";
   // create edit button with eventListner
   const editButton = editBtn();
   // create delete button with eventListner
@@ -186,14 +193,15 @@ const addTodo = (input, id) => {
 
 const displayCompletedTodos = () => {
   const todos = JSON.parse(localStorage.getItem('allTodos'));
-  document.querySelector('ul').innerHTML = '';
- 
+  document.getElementById("todo-list").innerHTML = '';
+  // debugger;
   todos.forEach((todo, index) => {
  
     if (todo.complete) {
      const ul = document.getElementById("todo-list");
      const li = document.createElement('li');
      li.setAttribute('id', todo.id);
+     li.className = "col-xl-10 offset-xl-1 li";
      // creates a todo and appends to div
      let div = createFilteredTodo(todo);
     //  div.setAttribute('class', 'todo-container');
@@ -205,7 +213,7 @@ const displayCompletedTodos = () => {
  const displayIncompleteTodos = () => {
    console.log('display all incompleteTodos');
    const todos = JSON.parse(localStorage.getItem('allTodos'));
-   document.querySelector('ul').innerHTML = '';
+   document.getElementById("todo-list").innerHTML = '';
  
    todos.forEach((todo, index) => {
  
@@ -213,6 +221,7 @@ const displayCompletedTodos = () => {
       const ul = document.getElementById("todo-list");
       const li = document.createElement('li');
       li.setAttribute('id', todo.id);
+      li.className = "col-xl-10 offset-xl-1 li";
       // creates a todo and appends to div
       let div = createFilteredTodo(todo);
       // div.setAttribute('class', 'todo-container');
@@ -245,8 +254,31 @@ const editBtn = () => {
   let btn = document.createElement('button');
   btn.innerText = 'edit';
   btn.className = 'btn col-xl-1 col-lg-1 col-md-1 col-sm-2 btn-outline-secondary btn-sm todo-btn';
-  btn.addEventListener('click', function () {
-    updateTodo(this);
+  btn.setAttribute('data-toggle', 'modal');
+  btn.setAttribute('data-target', "#exampleModal")
+
+  btn.addEventListener('click', function (e) {
+    // console.log(e)
+    // btn.setAttribute('data-toggle', 'modal');
+    // btn.setAttribute('data-target', "#exampleModal")
+    var myModal = document.getElementById('save-modal');
+    
+    let id = this.parentNode.parentNode.id;
+    let nodes = this.parentNode.childNodes;
+    let currentTodoValue;
+    for (let i = 0; i < nodes.length; i++) {
+      if (nodes[i].localName == "span") {
+        currentTodoValue = nodes[i].innerHTML;
+      }
+    }
+    
+    document.getElementById('modal-input').value = currentTodoValue;
+    myModal.setAttribute('onclick', `updateTodo(${id}, "${currentTodoValue}")`)
+    
+    
+    // console.log(this.parentNode)
+    // updateTodo(this);
+
   });
   return btn;
 };

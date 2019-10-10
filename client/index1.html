@@ -6,7 +6,10 @@
       <meta charset="UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
       <link rel="stylesheet" href="css/bootstrap.min.css" />
+      
       <!-- <link rel="stylesheet" href="css/custom.css"> -->
       <link rel="stylesheet" type="text/css" href="main1.css" />
       <link href="css/open-iconic-bootstrap.css" rel="stylesheet">
@@ -90,22 +93,22 @@
                     <div class="row custom-div">
                         <!-- <button class="btn col-xs-3 col-xs-3 custom-btn">icon</button> -->
                         <!-- <span class="oi oi-trash col-xs-3 col-xs-3"></span> -->
-                        <img class="col-xs-3 col-xs-3 custom-icon iconic iconic-sm" src="open-iconic/svg/trash.svg">
+                        <img class="col-xs-3 col-xs-3 custom-icon iconic iconic-sm" src="open-iconic/svg/trash.svg" onclick="displayAllTodos()">
                         <a class="col-xs-3 col-sm-9">Dispaly All</a>
                     </div>
                     <div class="row custom-div">
                         <!-- <button class="btn col-xs-3 col-xs-3">icon</button> -->
-                        <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/delete.svg">
+                        <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/delete.svg" onclick="deleteAllTodos(); return false;">
                         <a class=" col-xs-3 col-sm-9">Delete All</a>
                     </div>
                     <div class="row custom-div">
                             <!-- <button class="btn col-xs-3 col-xs-3">icon</button> -->
-                            <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/circle-check.svg">
+                            <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/circle-check.svg" onclick="displayCompletedTodos(); return false;">
                         <a class=" col-xs-3 col-sm-9">Display Completed</a>
                     </div>
                     <div class="row custom-div">
                             <!-- <button class="btn col-xs-3 col-xs-3">icon</button> -->
-                            <img class="col-xs-3 col-xs-3 custom-icon"  src="open-iconic/svg/magnifying-glass.svg">
+                            <img class="col-xs-3 col-xs-3 custom-icon"  src="open-iconic/svg/magnifying-glass.svg" onclick="displayIncompleteTodos(); return false;">
                         <a class="col-xs-3 col-sm-9">Display Incomplete</a>
                     </div>
                 </div>
@@ -135,6 +138,26 @@
             </div>
         </div>
       </div>
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Update Your Todo</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <input id="modal-input" placeholder="Type your todo" type="text"/>
+            </div>
+            <div class="modal-footer">
+              <button id="save-modal" type="button" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <hr>
 
       <footer>
@@ -143,6 +166,8 @@
     </div>
 
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="js/bootstrap.js"></script> -->
     <script src="main.js"></script>
     <script type="text/javascript">
         document.getElementById("todo-list").innerText = 'Getting Todos....'
