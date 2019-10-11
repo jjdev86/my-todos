@@ -252,7 +252,7 @@ const editBtn = () => {
   // create edit button with eventListner
   let btn = document.createElement("button");
   btn.innerText = "edit";
-  btn.className = "btn btn-primary";
+  btn.className = "btn btn-edit";
   btn.setAttribute("data-toggle", "modal");
   btn.setAttribute("data-target", "#exampleModal");
 
@@ -289,7 +289,7 @@ const deletebtn = () => {
   // create delete button with eventListner
   let btn = document.createElement("button");
   btn.innerText = "X";
-  btn.className = "btn btn-danger";
+  btn.className = "btn btn-delete";
   btn.addEventListener("click", function(event) {
     deleteTodo(this);
   });
