@@ -8,7 +8,7 @@ if (localStorage.getItem("allTodos") == null) {
 // Add event to Add button
 let addButton = document.getElementById("add-todo");
 // add event listener
-addButton.addEventListener("click", function() {
+addButton.addEventListener("click", function () {
   let input = document.querySelector("input[type='text']");
   // addTodo(input)
   if (input.value.length) {
@@ -28,7 +28,7 @@ addButton.addEventListener("click", function() {
 // Add Event to input on keyPress
 let input = document.querySelector("input[type='text']");
 // handle event on keypress
-input.addEventListener("keypress", function(keyPressed) {
+input.addEventListener("keypress", function (keyPressed) {
   if (keyPressed.charCode === 13) {
     // addTodo(this)
     if (this.value.length) {
@@ -256,7 +256,7 @@ const editBtn = () => {
   btn.setAttribute("data-toggle", "modal");
   btn.setAttribute("data-target", "#exampleModal");
 
-  btn.addEventListener("click", function(e) {
+  btn.addEventListener("click", function (e) {
     // console.log(e)
     // btn.setAttribute('data-toggle', 'modal');
     // btn.setAttribute('data-target', "#exampleModal")
@@ -289,8 +289,12 @@ const deletebtn = () => {
   // create delete button with eventListner
   let btn = document.createElement("button");
   btn.innerText = "X";
+  btn.addEventListener("mouseenter", function (e) {
+    chbg(this, '#fff', '#058DB5');
+  });
+
   btn.className = "btn btn-delete";
-  btn.addEventListener("click", function(event) {
+  btn.addEventListener("click", function (event) {
     deleteTodo(this);
   });
   return btn;
@@ -307,7 +311,7 @@ const checkBox = () => {
   checkbox.value = "false";
   checkbox.className = "col-xl-1 col-lg-1 col-md-1 col-sm-2 checkbox-label";
   // add listener that determine to check if todo is complete/incomplete
-  checkbox.addEventListener("click", function(e) {
+  checkbox.addEventListener("click", function (e) {
     // get id of li containing the todo
     let id = e.target.parentNode.parentNode.parentNode.id;
     // nodes inside li
@@ -333,3 +337,29 @@ const checkBox = () => {
 
   return label;
 };
+
+// fn to change button color onmouseover
+const chbg = (e, bg, color) => {
+  console.log(color);
+  e.previousSibling.style.background = bg;
+  e.previousSibling.style.color = color;
+
+  // reset the color after mouse leave
+  e.addEventListener("mouseleave", function () {
+    e.previousSibling.style.color = "";
+    e.previousSibling.style.background = "";
+  });
+};
+
+// fn change modal save button background on input keyup
+const mlsavebutton = () => {
+  const save = document.getElementById('save-modal');
+  save.style.background = '#058DB5';
+  save.style.color = '#fff';
+};
+
+//fn determine if modal input is empty
+// const mdlInputLengthCheck = () => {
+//   const input = document.getElementById('modal-input');
+//   console.log(input.length);
+// };
