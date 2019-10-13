@@ -338,7 +338,7 @@ const checkBox = () => {
   return label;
 };
 
-// fn to change button color onmouseover
+// fn to change edit button color onmouseover on remove btn
 const chbg = (e, bg, color) => {
   console.log(color);
   e.previousSibling.style.background = bg;
@@ -351,15 +351,18 @@ const chbg = (e, bg, color) => {
   });
 };
 
-// fn change modal save button background on input keyup
-const mlsavebutton = () => {
+// validate savebtn
+const validateSave = (e) => {
   const save = document.getElementById('save-modal');
-  save.style.background = '#058DB5';
-  save.style.color = '#fff';
-};
 
-//fn determine if modal input is empty
-// const mdlInputLengthCheck = () => {
-//   const input = document.getElementById('modal-input');
-//   console.log(input.length);
-// };
+  if (e.value.length >= 1 && e.value != "Default text") {
+    save.style.background = '#058DB5';
+    save.style.color = '#fff';
+    save.disabled = false;
+  } else {
+    save.style.background = '#fff';
+    save.style.color = "#058db5"
+    save.disabled = true;
+  }
+
+};
