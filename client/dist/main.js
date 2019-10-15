@@ -144,44 +144,67 @@ const deleteTodo = () => {
  * =======================FILTER BY TODO STATUS FUNCTIONS =================== *
  ******************************************************************************/
 
-const completedTodo = (e, span, id) => {
-  id = Number(id);
-  console.log(id);
-  // e.parentNode.childNodes[1].style.cssText = "text-decoration: line-through";
-  span.style.cssText = "text-decoration: line-through";
-  // disable edit button
-  span.parentNode.childNodes[2].style.display = "none";
-  e.value = "yes";
-  e.checked = true;
-  const allTodos = JSON.parse(localStorage.getItem("allTodos"));
-  // update todo to complete
-  allTodos.forEach((todo, index) => {
-    if (todo.id === id) {
-      todo.complete = true;
+const completedTodo = (e, span, _id) => {
+  // id = Number(id);
+  // console.log(_id);
+
+  fetch('/complete-todo', {
+    method: "PATCH",
+    body: JSON.stringify({_id, isComplete: true}),
+    headers: {
+      "Content-Type": "application/json"
     }
-  });
-  //update completeTodos with new
-  localStorage.setItem("allTodos", JSON.stringify(allTodos));
-  // displayIncompleteTodos();
+  })
+  .then(response => response.json())
+  .then(data => {
+    // e.parentNode.childNodes[1].style.cssText = "text-decoration: line-through";
+    span.style.cssText = "text-decoration: line-through";
+    // disable edit button
+    span.parentNode.childNodes[2].style.display = "none";
+    e.value = JSON.stringify(data.isComplete);
+    e.checked = data.isComplete;
+    const allTodos = JSON.parse(localStorage.getItem("allTodos"));
+    // update todo to complete
+    allTodos.forEach((todo, index) => {
+      if (todo.id === _id) {
+        todo.complete = data.isComplete;
+      }
+    });
+    //update completeTodos with new
+    localStorage.setItem("allTodos", JSON.stringify(allTodos));
+  })
+
 };
 
-const incompleteTodo = (e, span, id) => {
-  id = Number(id);
-  console.log(id)
-  // e.parentNode.childNodes[1].style.cssText = "text-decoration: none";
-  span.style.cssText = "text-decoration: none";
-  console.log(e.parentNode, "line 121 incomplete");
-  span.parentNode.childNodes[2].style.display = "inline-block";
-  e.value = "false";
+const incompleteTodo = (e, span, _id) => {
+  // id = Number(id);
+  // console.log(_id)
 
-  const allTodos = JSON.parse(localStorage.getItem("allTodos"));
-  allTodos.forEach((todo, index) => {
-    if (todo.id === id) {
-      todo.complete = false;
+  fetch('/complete-todo', {
+    method: "PATCH",
+    body: JSON.stringify({_id, isComplete: false}),
+    headers: {
+      "Content-Type": "application/json"
     }
-  });
-  localStorage.setItem("allTodos", JSON.stringify(allTodos));
-  // displayCompletedTodos();
+  })
+  .then(response => response.json())
+  .then(data => {
+    // e.parentNode.childNodes[1].style.cssText = "text-decoration: none";
+    span.style.cssText = "text-decoration: none";
+    // console.log(e.parentNode, "line 121 incomplete");
+    span.parentNode.childNodes[2].style.display = "inline-block";
+    e.value = data.isComplete;
+  
+    const allTodos = JSON.parse(localStorage.getItem("allTodos"));
+    allTodos.forEach((todo, index) => {
+      if (todo.id === _id) {
+        todo.complete = data.isComplete;
+      }
+    });
+    localStorage.setItem("allTodos", JSON.stringify(allTodos));
+  })
+
+
 };
 
 const displayAllTodos = () => {
