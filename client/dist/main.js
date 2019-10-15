@@ -113,15 +113,28 @@ const updateTodo = (id, currentValue) => {
 
 const deleteTodo = () => {
   const parentNode = document.getElementById("todo-list");
-  const id = Number(event.target.parentNode.parentNode.id);
-  const allTodos = JSON.parse(localStorage.getItem("allTodos"));
-
-  allTodos.forEach((todo, index) => {
-    if (todo.id === id) {
-      allTodos.splice(index, 1);
+  const id = event.target.parentNode.parentNode.id;
+  console.log(id, `before going to server`)
+  // call server to delete todo
+  fetch('/remove-todo', {
+    method: "DELETE", // or 'PUT'
+    body: JSON.stringify({id}), // data can be `string` or {object}!
+    headers: {
+      "Content-Type": "application/json"
     }
-  });
-  localStorage.setItem("allTodos", JSON.stringify(allTodos));
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data, `delete todo`)
+    const allTodos = JSON.parse(localStorage.getItem("allTodos"));
+  
+    allTodos.forEach((todo, index) => {
+      if (todo.id === id) {
+        allTodos.splice(index, 1);
+      }
+    });
+    localStorage.setItem("allTodos", JSON.stringify(allTodos));
+  })
   let removed = parentNode.removeChild(event.target.parentNode.parentNode);
 
   return removed;
@@ -133,7 +146,7 @@ const deleteTodo = () => {
 
 const completedTodo = (e, span, id) => {
   id = Number(id);
-  console.log(e, `event`);
+  console.log(id);
   // e.parentNode.childNodes[1].style.cssText = "text-decoration: line-through";
   span.style.cssText = "text-decoration: line-through";
   // disable edit button
@@ -154,6 +167,7 @@ const completedTodo = (e, span, id) => {
 
 const incompleteTodo = (e, span, id) => {
   id = Number(id);
+  console.log(id)
   // e.parentNode.childNodes[1].style.cssText = "text-decoration: none";
   span.style.cssText = "text-decoration: none";
   console.log(e.parentNode, "line 121 incomplete");
