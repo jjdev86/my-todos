@@ -209,18 +209,49 @@ const incompleteTodo = (e, span, _id) => {
 
 const displayAllTodos = () => {
   // get all todos from storage
-  const todos = JSON.parse(localStorage.getItem("allTodos"));
-  document.getElementById("todo-list").innerHTML = "";
+  const _id = localStorage.getItem("userId");
 
-  todos.forEach((todo, index) => {
-    const ul = document.getElementById("todo-list");
-    const li = document.createElement("li");
-    li.setAttribute("id", todo.id);
-    li.className = "col-xl-10 offset-xl-1 li";
-    // creates a todo and appends to div
-    const div = createFilteredTodo(todo);
-    ul.appendChild(li).append(div);
-  });
+  // get todos from db
+  fetch(`/all-todos${_id}`, {
+    method: "GET", // or 'PUT'
+    // body: JSON.stringify({_id }), // data can be `string` or {object}!
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+
+    console.log(data, `all todos`)
+    document.getElementById("todo-list").innerHTML = "";
+    data.forEach((todo, index) => {
+
+      const ul = document.getElementById("todo-list");
+      const li = document.createElement("li");
+      li.setAttribute("id", todo._id);
+      li.className = "col-xl-10 offset-xl-1 li";
+      // creates a todo and appends to div
+      const div = createFilteredTodo(todo);
+      ul.appendChild(li).append(div);
+    });
+    // reset ul
+
+
+  })
+  .catch(err => console.log(err));
+
+  // const todos = JSON.parse(localStorage.getItem("allTodos"));
+  // document.getElementById("todo-list").innerHTML = "";
+
+  // todos.forEach((todo, index) => {
+  //   const ul = document.getElementById("todo-list");
+  //   const li = document.createElement("li");
+  //   li.setAttribute("id", todo.id);
+  //   li.className = "col-xl-10 offset-xl-1 li";
+  //   // creates a todo and appends to div
+  //   const div = createFilteredTodo(todo);
+  //   ul.appendChild(li).append(div);
+  // });
 };
 
 const deleteAllTodos = () => {
@@ -268,37 +299,84 @@ const displayCompletedTodos = () => {
   const todos = JSON.parse(localStorage.getItem("allTodos"));
   document.getElementById("todo-list").innerHTML = "";
   // debugger;
-  todos.forEach((todo, index) => {
-    if (todo.complete) {
-      const ul = document.getElementById("todo-list");
-      const li = document.createElement("li");
-      li.setAttribute("id", todo.id);
-      li.className = "col-xl-10 offset-xl-1 li";
-      // creates a todo and appends to div
-      let div = createFilteredTodo(todo);
-      //  div.setAttribute('class', 'todo-container');
-      ul.appendChild(li).append(div);
+  const _id = localStorage.getItem("userId");
+  fetch(`/completed-todos${_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
     }
-  });
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data, `complete`)
+    data.forEach((todo, index) => {
+        const ul = document.getElementById("todo-list");
+        const li = document.createElement("li");
+        li.setAttribute("id", todo._id);
+        li.className = "col-xl-10 offset-xl-1 li";
+        // creates a todo and appends to div
+        let div = createFilteredTodo(todo);
+        //  div.setAttribute('class', 'todo-container');
+        ul.appendChild(li).append(div);
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  })
+  // todos.forEach((todo, index) => {
+  //   if (todo.complete) {
+  //     const ul = document.getElementById("todo-list");
+  //     const li = document.createElement("li");
+  //     li.setAttribute("id", todo.id);
+  //     li.className = "col-xl-10 offset-xl-1 li";
+  //     // creates a todo and appends to div
+  //     let div = createFilteredTodo(todo);
+  //     //  div.setAttribute('class', 'todo-container');
+  //     ul.appendChild(li).append(div);
+  //   }
+  // });
 };
 
 const displayIncompleteTodos = () => {
   console.log("display all incompleteTodos");
-  const todos = JSON.parse(localStorage.getItem("allTodos"));
   document.getElementById("todo-list").innerHTML = "";
-
-  todos.forEach((todo, index) => {
-    if (!todo.complete) {
-      const ul = document.getElementById("todo-list");
-      const li = document.createElement("li");
-      li.setAttribute("id", todo.id);
-      li.className = "col-xl-10 offset-xl-1 li";
-      // creates a todo and appends to div
-      let div = createFilteredTodo(todo);
-      // div.setAttribute('class', 'todo-container');
-      ul.appendChild(li).append(div);
+  const _id = localStorage.getItem("userId");
+  fetch(`/incomplete-todos${_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
     }
-  });
+  })
+  .then(response => response.json())
+  .then(data => {
+    // console.log(data, `incomplete todos`);
+    data.forEach((todo, index) => {
+        const ul = document.getElementById("todo-list");
+        const li = document.createElement("li");
+        li.setAttribute("id", todo._id);
+        li.className = "col-xl-10 offset-xl-1 li";
+        // creates a todo and appends to div
+        let div = createFilteredTodo(todo);
+        // div.setAttribute('class', 'todo-container');
+        ul.appendChild(li).append(div);
+    });
+  })
+  // const todos = JSON.parse(localStorage.getItem("allTodos"));
+  // document.getElementById("todo-list").innerHTML = "";
+
+  // todos.forEach((todo, index) => {
+
+  //   if (!todo.complete) {
+  //     const ul = document.getElementById("todo-list");
+  //     const li = document.createElement("li");
+  //     li.setAttribute("id", todo.id);
+  //     li.className = "col-xl-10 offset-xl-1 li";
+  //     // creates a todo and appends to div
+  //     let div = createFilteredTodo(todo);
+  //     // div.setAttribute('class', 'todo-container');
+  //     ul.appendChild(li).append(div);
+  //   }
+  // });
 };
 
 const createFilteredTodo = todo => {
@@ -306,18 +384,18 @@ const createFilteredTodo = todo => {
   div.className = "todo-container row";
 
   const span = document.createElement("span");
-  span.innerText = todo.nodeText;
+  span.innerText = todo.todo;
   (span.className = "col-xl-9"), "col-lg-9", "col-md-8", "col-sm-6";
 
   const checkbox = checkBox();
 
-  if (todo.complete) {
+  if (todo.isComplete) {
     span.style.cssText = "text-decoration: line-through";
     checkbox.firstChild.checked = true;
   }
 
   const edit = editBtn();
-  checkbox.value = todo.complete;
+  checkbox.value = todo.isComplete;
   const delBtn = deletebtn();
   div.append(checkbox, span, edit, delBtn);
   // div.setAttribute("class", "todo-container row");
