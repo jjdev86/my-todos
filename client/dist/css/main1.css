@@ -63,7 +63,6 @@
   display: table;
 }
 
-
 .li {
   width: 80%;
   padding-right: 0px;
@@ -85,7 +84,6 @@
   box-shadow: 3px 3px 3px rgb(128, 126, 126);
 }
 
-
 hr {
   margin-top: 0px;
 }
@@ -93,21 +91,24 @@ hr {
   width: 80%;
 }
 
-.btn, .checkbox-custom {
+.btn,
+.checkbox-custom {
   /* background-color: #fff; */
   /* border-radius: 2px; */
   border: 1px solid #ced4da;
 }
 
-.btn-todo, .custom-btn {
+.btn-todo,
+.custom-btn {
   /* margin-top: 6px !important; */
   border: 1px solid #ced4da;
   background: white;
-  color: #058DB5;
+  color: #058db5;
 }
-.btn-todo:hover, .custom-btn:hover {
-  background: #058DB5;
-  border: 1px solid #058DB5;
+.btn-todo:hover,
+.custom-btn:hover {
+  background: #058db5;
+  border: 1px solid #058db5;
   color: white;
 }
 
@@ -115,19 +116,27 @@ hr {
   margin-top: 6px !important;
   height: 37.6px;
 }
-.btn-edit {
-  background: #058DB5;
+.btn-edit:enabled {
+  background: #058db5;
   color: #fff;
-  border: 1px solid #058DB5;
+  border: 1px solid #058db5;
   margin: 2px 2px;
 }
-.btn-edit:hover {
+.btn-edit:hover:enabled {
   background: #fff;
-  color: #058DB5;
+  color: #058db5;
   border: 1px solid;
 }
 
-.btn-delete { background: #fff; color: #da1920; font-size: 1em; font-weight: bold; width: 40px; height: 40px; border-radius: 5px;}
+.btn-delete {
+  background: #fff;
+  color: #da1920;
+  font-size: 1em;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
 .btn-delete:hover {
   background: #da1920;
   color: #fff;
@@ -140,13 +149,13 @@ hr {
 
 #save-modal {
   background: #fff;
-  color: #058DB5;
-  border: 1px solid #058DB5;
+  color: #058db5;
+  border: 1px solid #058db5;
   margin: 2px 2px;
 }
 
 .btn-modal-close:hover {
-  color: #058DB5;
+  color: #058db5;
 }
 .add-todo-input {
   width: 79%;
@@ -172,11 +181,11 @@ hr {
   margin-left: 15px;
   color: black;
   cursor: pointer;
-  padding-top: .199em;
+  padding-top: 0.199em;
 }
 
 .oi:hover {
-  color: #058DB5;
+  color: #058db5;
 }
 .oi-trash:hover {
   color: #da1920;
@@ -191,7 +200,6 @@ hr {
   opacity: 0;
   cursor: pointer;
 }
-
 
 .checkbox-label .checkbox-custom {
   cursor: pointer;
@@ -212,7 +220,7 @@ hr {
   height: 0px;
   width: 0px;
   border-radius: 5px;
-  border: 1px solid #058DB5;
+  border: 1px solid #058db5;
   border-width: 0px 4px 4px 0;
   -webkit-transform: rotate(0deg) scale(0);
   -ms-transform: rotate(0deg) scale(0);
@@ -221,7 +229,7 @@ hr {
 }
 
 .checkbox-label input:checked ~ .checkbox-custom {
-  background-color: #058DB5;
+  background-color: #058db5;
   border-radius: 5px;
 
   -webkit-transform: rotate(0deg) scale(1);
@@ -249,12 +257,12 @@ hr {
 #modal-input {
   width: 50%;
   border: 0;
-  border-bottom: 2px solid #058DB5;
+  border-bottom: 2px solid #058db5;
   padding-left: 10px;
 }
 
 #modal-input:hover {
-  border-bottom: 2px solid #058DB5;
+  border-bottom: 2px solid #058db5;
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
 }
@@ -262,8 +270,7 @@ hr {
   width: 100%;
 }
 
-
-
-input[type="text"], .add-todo-input{
+input[type="text"],
+.add-todo-input {
   outline: none;
 }

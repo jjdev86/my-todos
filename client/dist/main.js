@@ -12,15 +12,10 @@ if (localStorage.getItem("user") == null) {
   })
     .then(response => response.json())
     .then(data => {
-      console.log(data, `from server`)
       localStorage.setItem("user", data[0].username);
       localStorage.setItem("userId", data[0]._id);
     })
     .catch(err => console.log(err));
-}
-if (localStorage.getItem("allTodos") == null) {
-  localStorage.setItem("allTodos", JSON.stringify([]));
-  localStorage.setItem("todoId", 0);
 }
 
 const createTodo = event => {
@@ -29,13 +24,6 @@ const createTodo = event => {
   if (char === 13 || event.type === 'click') {
     const input = document.querySelector("input[type='text']");
     if (input.value.length) {
-      // let id = Number(localStorage.getItem("todoId")) + 1;
-      // const allTodos = JSON.parse(localStorage.getItem("allTodos"));
-      // allTodos.push({ id: id, nodeText: input.value, complete: false });
-      // // incompleteTodos.push([id, this.value]);
-      // localStorage.setItem("todoId", id);
-      // localStorage.setItem("allTodos", JSON.stringify(allTodos));
-      // addTodo(input, id);
 
       // refactor to call fetch to create post
       const todo = {};
@@ -51,20 +39,10 @@ const createTodo = event => {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data)
-          let id = data[0]._id;
-          const allTodos = JSON.parse(localStorage.getItem("allTodos"));
-          allTodos.push({ id: id, nodeText: data[0].todo, complete: false });
-          // incompleteTodos.push([id, this.value]);
-          localStorage.setItem("todoId", id);
-          localStorage.setItem("allTodos", JSON.stringify(allTodos));
-          addTodo(data[0].todo, data[0]._id);
-            // clear input text
+          addTodo(data[0])
           input.value = "";
         })
         .catch(err => console.log(err));
-    
-      
     }
   }
   
@@ -75,9 +53,8 @@ const createTodo = event => {
  * =======================ALTER TODO =================== *
  ******************************************************************************/
 
-const updateTodo = (id, currentValue) => {
+const updateTodo = (id) => {
   // get Modal input value
-  console.log(id, `todo?`)
   let update = document.getElementById("modal-input");
   const todoUpdate = {};
   todoUpdate.todo = update.value;
@@ -92,29 +69,19 @@ const updateTodo = (id, currentValue) => {
   })
   .then(response => response.json())
   .then(data => {
-    const allTodos = JSON.parse(localStorage.getItem("allTodos"));
-    allTodos.forEach(todo => {
-      if (todo.id === id) {
-        todo.nodeText = data.todo;
-      }
-    });
-  
-    localStorage.setItem("allTodos", JSON.stringify(allTodos));
     displayAllTodos();
-    
   })
   .catch(err => console.log(err));
   var myModal = document.getElementById("save-modal");
   myModal.setAttribute("data-dismiss", "modal");
   update.value = "";
-  // console.log(update., 'test');
-  // displayAllTodos();
+
 };
 
 const deleteTodo = () => {
   const parentNode = document.getElementById("todo-list");
   const id = event.target.parentNode.parentNode.id;
-  console.log(id, `before going to server`)
+  let e = event;
   // call server to delete todo
   fetch('/remove-todo', {
     method: "DELETE", // or 'PUT'
@@ -125,19 +92,9 @@ const deleteTodo = () => {
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data, `delete todo`)
-    const allTodos = JSON.parse(localStorage.getItem("allTodos"));
-  
-    allTodos.forEach((todo, index) => {
-      if (todo.id === id) {
-        allTodos.splice(index, 1);
-      }
-    });
-    localStorage.setItem("allTodos", JSON.stringify(allTodos));
+    let removed = parentNode.removeChild(e.target.parentNode.parentNode);
+    return removed;
   })
-  let removed = parentNode.removeChild(event.target.parentNode.parentNode);
-
-  return removed;
 };
 
 /******************************************************************************\
@@ -145,8 +102,6 @@ const deleteTodo = () => {
  ******************************************************************************/
 
 const completedTodo = (e, span, _id) => {
-  // id = Number(id);
-  // console.log(_id);
 
   fetch('/complete-todo', {
     method: "PATCH",
@@ -157,28 +112,17 @@ const completedTodo = (e, span, _id) => {
   })
   .then(response => response.json())
   .then(data => {
-    // e.parentNode.childNodes[1].style.cssText = "text-decoration: line-through";
     span.style.cssText = "text-decoration: line-through";
     // disable edit button
-    span.parentNode.childNodes[2].style.display = "none";
+    span.parentNode.childNodes[2].disabled = true;
     e.value = JSON.stringify(data.isComplete);
     e.checked = data.isComplete;
-    const allTodos = JSON.parse(localStorage.getItem("allTodos"));
-    // update todo to complete
-    allTodos.forEach((todo, index) => {
-      if (todo.id === _id) {
-        todo.complete = data.isComplete;
-      }
-    });
-    //update completeTodos with new
-    localStorage.setItem("allTodos", JSON.stringify(allTodos));
   })
+  .catch(err => console.log(err));
 
 };
 
 const incompleteTodo = (e, span, _id) => {
-  // id = Number(id);
-  // console.log(_id)
 
   fetch('/complete-todo', {
     method: "PATCH",
@@ -189,19 +133,10 @@ const incompleteTodo = (e, span, _id) => {
   })
   .then(response => response.json())
   .then(data => {
-    // e.parentNode.childNodes[1].style.cssText = "text-decoration: none";
+
     span.style.cssText = "text-decoration: none";
-    // console.log(e.parentNode, "line 121 incomplete");
     span.parentNode.childNodes[2].style.display = "inline-block";
     e.value = data.isComplete;
-  
-    const allTodos = JSON.parse(localStorage.getItem("allTodos"));
-    allTodos.forEach((todo, index) => {
-      if (todo.id === _id) {
-        todo.complete = data.isComplete;
-      }
-    });
-    localStorage.setItem("allTodos", JSON.stringify(allTodos));
   })
 
 
@@ -221,8 +156,6 @@ const displayAllTodos = () => {
   })
   .then(response => response.json())
   .then(data => {
-
-    console.log(data, `all todos`)
     document.getElementById("todo-list").innerHTML = "";
     data.forEach((todo, index) => {
 
@@ -234,9 +167,6 @@ const displayAllTodos = () => {
       const div = createFilteredTodo(todo);
       ul.appendChild(li).append(div);
     });
-    // reset ul
-
-
   })
   .catch(err => console.log(err));
 
@@ -255,24 +185,37 @@ const displayAllTodos = () => {
 };
 
 const deleteAllTodos = () => {
-  localStorage.setItem("allTodos", "[]");
-  document.getElementById("todo-list").innerHTML = "";
+  // localStorage.setItem("allTodos", "[]");
+  const _id = localStorage.getItem("userId");
+  // get todos from db
+  fetch(`/remove-all-todos${_id}`, {
+    method: "DELETE", // or 'PUT'
+    // body: JSON.stringify({_id }), // data can be `string` or {object}!
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(data => {
+    // console.log(data, `response`)
+    document.getElementById("todo-list").innerHTML = "";
+  })
+  .catch(err => console.log(err));
 };
 
 /******************************************************************************\
  * ============================HELPER FUNCTIONS================================/
  ******************************************************************************/
 
-const addTodo = (input, id) => {
+const addTodo = (data) => {
   let li = document.createElement("li");
-  li.setAttribute("id", id);
+  li.setAttribute("id", data._id);
   li.className = "col-xl-10 offset-xl-1 li";
   // create edit button with eventListner
   const editButton = editBtn();
   // create delete button with eventListner
   const deleteButton = deletebtn();
   // create checkbox
-  const checkbox = checkBox();
+  const checkbox = checkBox(data.isComplete);
   // create span tag
   const span = document.createElement("span");
   // div to contain checkbox, span, edit and delete buttons
@@ -281,10 +224,8 @@ const addTodo = (input, id) => {
   div.className = "row todo-container";
   // set input value to span tag
   // span.innerText = input.value;
-  span.innerText = input;
+  span.innerText = data.todo;
   span.className = "col-xl-9 col-lg-9 col-md-8 col-sm-6";
-  // clear input text
-  // input.value = "";
 
   const ul = document.getElementById("todo-list");
   // append elements to div
@@ -296,7 +237,7 @@ const addTodo = (input, id) => {
 };
 
 const displayCompletedTodos = () => {
-  const todos = JSON.parse(localStorage.getItem("allTodos"));
+  // const todos = JSON.parse(localStorage.getItem("allTodos"));
   document.getElementById("todo-list").innerHTML = "";
   // debugger;
   const _id = localStorage.getItem("userId");
@@ -308,7 +249,6 @@ const displayCompletedTodos = () => {
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data, `complete`)
     data.forEach((todo, index) => {
         const ul = document.getElementById("todo-list");
         const li = document.createElement("li");
@@ -322,23 +262,12 @@ const displayCompletedTodos = () => {
   })
   .catch(err => {
     console.log(err);
-  })
-  // todos.forEach((todo, index) => {
-  //   if (todo.complete) {
-  //     const ul = document.getElementById("todo-list");
-  //     const li = document.createElement("li");
-  //     li.setAttribute("id", todo.id);
-  //     li.className = "col-xl-10 offset-xl-1 li";
-  //     // creates a todo and appends to div
-  //     let div = createFilteredTodo(todo);
-  //     //  div.setAttribute('class', 'todo-container');
-  //     ul.appendChild(li).append(div);
-  //   }
-  // });
+  });
+
 };
 
 const displayIncompleteTodos = () => {
-  console.log("display all incompleteTodos");
+
   document.getElementById("todo-list").innerHTML = "";
   const _id = localStorage.getItem("userId");
   fetch(`/incomplete-todos${_id}`, {
@@ -357,26 +286,11 @@ const displayIncompleteTodos = () => {
         li.className = "col-xl-10 offset-xl-1 li";
         // creates a todo and appends to div
         let div = createFilteredTodo(todo);
-        // div.setAttribute('class', 'todo-container');
+
         ul.appendChild(li).append(div);
     });
   })
-  // const todos = JSON.parse(localStorage.getItem("allTodos"));
-  // document.getElementById("todo-list").innerHTML = "";
-
-  // todos.forEach((todo, index) => {
-
-  //   if (!todo.complete) {
-  //     const ul = document.getElementById("todo-list");
-  //     const li = document.createElement("li");
-  //     li.setAttribute("id", todo.id);
-  //     li.className = "col-xl-10 offset-xl-1 li";
-  //     // creates a todo and appends to div
-  //     let div = createFilteredTodo(todo);
-  //     // div.setAttribute('class', 'todo-container');
-  //     ul.appendChild(li).append(div);
-  //   }
-  // });
+  .catch(err => console.log(err));
 };
 
 const createFilteredTodo = todo => {
@@ -385,9 +299,9 @@ const createFilteredTodo = todo => {
 
   const span = document.createElement("span");
   span.innerText = todo.todo;
-  (span.className = "col-xl-9"), "col-lg-9", "col-md-8", "col-sm-6";
+  span.className = "col-xl-9 col-lg-9 col-md-8 col-sm-6";
 
-  const checkbox = checkBox();
+  const checkbox = checkBox(todo.isComplete);
 
   if (todo.isComplete) {
     span.style.cssText = "text-decoration: line-through";
@@ -395,10 +309,14 @@ const createFilteredTodo = todo => {
   }
 
   const edit = editBtn();
+  if (todo.isComplete) {
+    edit.disabled = true;
+  }
   checkbox.value = todo.isComplete;
   const delBtn = deletebtn();
+
   div.append(checkbox, span, edit, delBtn);
-  // div.setAttribute("class", "todo-container row");
+
   return div;
 };
 
@@ -414,9 +332,6 @@ const editBtn = () => {
   btn.setAttribute("data-target", "#exampleModal");
 
   btn.addEventListener("click", function(e) {
-    // console.log(e)
-    // btn.setAttribute('data-toggle', 'modal');
-    // btn.setAttribute('data-target', "#exampleModal")
     var myModal = document.getElementById("save-modal");
 
     let id = this.parentNode.parentNode.id;
@@ -431,8 +346,6 @@ const editBtn = () => {
     document.getElementById("modal-input").value = currentTodoValue;
     myModal.setAttribute("onclick", `updateTodo("${id}", "${currentTodoValue}")`);
 
-    // console.log(this.parentNode)
-    // updateTodo(this);
   });
   return btn;
 };
@@ -455,7 +368,7 @@ const deletebtn = () => {
   return btn;
 };
 
-const checkBox = () => {
+const checkBox = (isComplete) => {
   // create label
   const label = document.createElement("label");
   label.className = "checkbox-label col-xl-1 col-lg-1 col-md-1 col-sm-2";
@@ -463,7 +376,7 @@ const checkBox = () => {
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.name = "completed";
-  checkbox.value = "false";
+  checkbox.value = isComplete;
   checkbox.className = "col-xl-1 col-lg-1 col-md-1 col-sm-2 checkbox-label";
   // add listener that determine to check if todo is complete/incomplete
   checkbox.addEventListener("click", function(e) {
@@ -482,6 +395,8 @@ const checkBox = () => {
     if (this.value === "false") {
       completedTodo(this, spanNode, id);
     } else {
+      // enable edit button
+      this.parentNode.nextSibling.nextSibling.disabled = false;
       incompleteTodo(this, spanNode, id);
     }
   });
@@ -489,13 +404,11 @@ const checkBox = () => {
   const span = document.createElement("span");
   span.className = "checkbox-custom checkbox-label";
   label.append(checkbox, span);
-
   return label;
 };
 
 // fn to change edit button color onmouseover on remove btn
 const chbg = (e, bg, color) => {
-  console.log(color);
   e.previousSibling.style.background = bg;
   e.previousSibling.style.color = color;
 
