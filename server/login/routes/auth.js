@@ -15,6 +15,7 @@ router.get('/login', passport.authenticate('auth0', {
   scope: 'openid email profile'
 }), function (req, res) {
   res.redirect('/');
+  // res.redirect('/layout')÷
 });
 
 // Perform the final stage of authentication and redirect to previously requested URL or '/user'

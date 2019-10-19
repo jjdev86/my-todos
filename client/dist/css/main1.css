@@ -46,7 +46,20 @@
     border-right: 1px solid;
   }
 }
+span {
+  font-size: 40px;
+  font-family: 'Reenie Beanie', cursive;
 
+}
+
+.navbar {
+  font-size: 40px;
+  font-family: 'Reenie Beanie', cursive;
+}
+a {
+  font-size: 40px;
+  font-family: 'Reenie Beanie', cursive;
+}
 #sidebar {
   padding: 15px;
   margin-top: 0px;

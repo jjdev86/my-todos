@@ -11,6 +11,7 @@ head
     link(rel='stylesheet' href='open-iconic/font/css/open-iconic-bootstrap.min.css')
     link(rel='stylesheet' href='css/main1.css')
     link(href='open-iconic/font/css/open-iconic.css' rel='stylesheet')
+    link(href="https://fonts.googleapis.com/css?family=Reenie+Beanie&display=swap" rel="stylesheet")
     title my-Todos
 nav.navbar.navbar-expand-lg.navbar-light.bg-light
   a.navbar-brand(href='#') Todos
@@ -23,14 +24,15 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
           | Home
           span.sr-only (current)
       li.nav-item
-        a.nav-link(href='#') About
+        a.nav-link(href='/about') About
       li.nav-item
         a.nav-link(href='#' tabindex='-1') Contact
     form.form-inline.my-2.my-lg-0
       input.form-control.mr-sm-2(type='search' placeholder='Search Todo' aria-label='Search')
       button.btn.btn-search.custom-btn.my-2.my-sm-0(type='submit')
         | Search
-      a.mr-sm-2 Welcome #{user.nickname}
+      if locals.user
+        a.mr-sm-2 Welcome #{user.nickname}
     ul.nav.navbar-nav.navbar-right.my-2.my-lg-0
     if locals.user
       li
@@ -39,84 +41,92 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
           |  Log Out
     else
       li
-        a(href='#')
+        a(href='/user')
           span.glyphicon.glyphicon-log-in.mr-sm-2
           |  Login
 // header img
 header
   .page-header
-    img.header-img(src='images/header1.png' alt='Cinque Terre')
-    h6(style='display: none')
+    div.header-img(style='background-image: url("/images/header1.png");')
+      div
+        img.a-logo(src="images/logo.png" alt="logo" style="margin-left: 30px")
+      div
+        h6(style='display: none')| Photo by Glenn Carstens-Peters on Unsplash
+    //- img.header-img(src='images/header1.png' alt='Cinque Terre')
+    //- img.a-logo(src="images/logo.png" alt="logo")
+      h6(style='display: none')
       | Photo by Glenn Carstens-Peters on Unsplash
 // Container
-.container-fluid
-  .row.row-offcanvas.row-offcanvas-left
-    #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation')
-      .sidebar-nav
-        .nav
-          .container.custom-container
-            .row.custom-div
-              // <button class="btn col-xs-3 col-xs-3 custom-btn">icon</button>
-              // <span class="oi oi-task col-xs-3 col-xs-3"></span>
-              // <span class="iconic iconic-task col-xs-3 col-xs-3" title="task" aria-hidden="false"></span>
+if locals.user
+  .container-fluid
+    .row.row-offcanvas.row-offcanvas-left
+      #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation')
+        .sidebar-nav
+          .nav
+            .container.custom-container
+              .row.custom-div
+                // <button class="btn col-xs-3 col-xs-3 custom-btn">icon</button>
+                // <span class="oi oi-task col-xs-3 col-xs-3"></span>
+                // <span class="iconic iconic-task col-xs-3 col-xs-3" title="task" aria-hidden="false"></span>
 
-              span.col-xs-3.col-xs-3.oi.oi-task(onclick='displayAllTodos()')
-              a.col-xs-3.col-sm-9 Dispaly All
-            .row.custom-div
-              // <button class="btn col-xs-3 col-xs-3">icon</button>
-              span.col-xs-3.col-xs-3.oi.oi-trash(onclick='deleteAllTodos(); return false;')
-              // <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/trash.svg" onclick="deleteAllTodos(); return false;">
-              a.col-xs-3.col-sm-9 Delete All
-            .row.custom-div
-              // <button class="btn col-xs-3 col-xs-3">icon</button>
-              span.col-xs-3.col-xs-3.oi.oi-circle-check(onclick='displayCompletedTodos();')
-              // <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/circle-check.svg" onclick="displayCompletedTodos();">
-              a.col-xs-3.col-sm-9 Display Completed
-            .row.custom-div
-              // <button class="btn col-xs-3 col-xs-3">icon</button>
-              span.col-xs-3.col-xs-3.oi.oi-magnifying-glass(onclick='displayIncompleteTodos();')
-              // <img class="col-xs-3 col-xs-3 custom-icon"  src="open-iconic/svg/magnifying-glass.svg" onclick="displayIncompleteTodos();">
-              a.col-xs-3.col-sm-9 Display Incomplete
-    // right side
-    .col-xs-12.col-sm-9.right-side-content
-      br
-      .jumbotron-right
-        a.visible-xs(href='#' data-toggle='offcanvas')
-          i.fa.fa-lg.fa-reorder
-        // <div class="container">
-        #todos.container-fluid.custom-fluid
-          .row.justify-content-md-center.add-todo
-            .col-xl-9.offset-xl-3(align='center')
-              input.add-todo-input.form-control.mr-sm-2(type='text' placeholder='Add A New Todo' onkeypress='createTodo(event)')
-              button#add-todo.btn.btn-outline-success.my-2.btn-todo(onclick='createTodo(event)') Add
-          // <div class="row">
-          ul#todo-list.todos.col
+                span.col-xs-3.col-xs-3.oi.oi-task(onclick='displayAllTodos()')
+                a.col-xs-3.col-sm-9 Dispaly All
+              .row.custom-div
+                // <button class="btn col-xs-3 col-xs-3">icon</button>
+                span.col-xs-3.col-xs-3.oi.oi-trash(onclick='deleteAllTodos(); return false;')
+                // <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/trash.svg" onclick="deleteAllTodos(); return false;">
+                a.col-xs-3.col-sm-9 Delete All
+              .row.custom-div
+                // <button class="btn col-xs-3 col-xs-3">icon</button>
+                span.col-xs-3.col-xs-3.oi.oi-circle-check(onclick='displayCompletedTodos();')
+                // <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/circle-check.svg" onclick="displayCompletedTodos();">
+                a.col-xs-3.col-sm-9 Display Completed
+              .row.custom-div
+                // <button class="btn col-xs-3 col-xs-3">icon</button>
+                span.col-xs-3.col-xs-3.oi.oi-magnifying-glass(onclick='displayIncompleteTodos();')
+                // <img class="col-xs-3 col-xs-3 custom-icon"  src="open-iconic/svg/magnifying-glass.svg" onclick="displayIncompleteTodos();">
+                a.col-xs-3.col-sm-9 Display Incomplete
+      // right side
+      .col-xs-12.col-sm-9.right-side-content
+        br
+        .jumbotron-right
+          a.visible-xs(href='#' data-toggle='offcanvas')
+            i.fa.fa-lg.fa-reorder
+          // <div class="container">
+          #todos.container-fluid.custom-fluid
+            .row.justify-content-md-center.add-todo
+              .col-xl-9.offset-xl-3(align='center')
+                input.add-todo-input.form-control.mr-sm-2(type='text' placeholder='Add A New Todo' onkeypress='createTodo(event)')
+                button#add-todo.btn.btn-outline-success.my-2.btn-todo(onclick='createTodo(event)') Add
+            // <div class="row">
+            ul#todo-list.todos.col
+            // </div>
           // </div>
-        // </div>
-  #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
-    .modal-dialog(role='document')
-      .modal-content
-        .modal-header
-          h5.modal-title Update Your Todo
-          button.close(type='button' data-dismiss='modal' aria-label='Close')
-            span(aria-hidden='true') &times;
-        .modal-body
-          input#modal-input(placeholder='Type your todo' type='text' onkeyup='validateSave(this)')
-        .modal-footer
-          button#save-modal.btn.btn-primary(type='button')
-            | Save
-            | changes
-          button.btn.btn-modal-close(type='button' data-dismiss='modal') Close
-  hr
-  footer
-    p &copy; Jose Valadez 2019
-script(src='js/bootstrap.min.js')
-script(src='js/bootstrap.bundle.min.js')
-// <script src="js/bootstrap.js"></script>
-script(src='main.js')
-script(type='text/javascript').
-  document.getElementById("todo-list").innerText = 'Getting Todos....'
-  setTimeout(() => {
-  document.getElementById("todo-list").innerText = '';
-  displayAllTodos();
-  }, 1000);
+    #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5.modal-title Update Your Todo
+            button.close(type='button' data-dismiss='modal' aria-label='Close')
+              span(aria-hidden='true') &times;
+          .modal-body
+            input#modal-input(placeholder='Type your todo' type='text' onkeyup='validateSave(this)')
+          .modal-footer
+            button#save-modal.btn.btn-primary(type='button')
+              | Save
+              | changes
+            button.btn.btn-modal-close(type='button' data-dismiss='modal') Close
+    hr
+    footer
+      p &copy; Jose Valadez 2019
+  script(src='js/bootstrap.min.js')
+  script(src='js/bootstrap.bundle.min.js')
+  // <script src="js/bootstrap.js"></script>
+  script(src='main.js')
+  script(type='text/javascript').
+    document.getElementById("todo-list").innerText = 'Getting Todos....'
+    setTimeout(() => {
+    document.getElementById("todo-list").innerText = '';
+    displayAllTodos();
+    }, 1000);
+

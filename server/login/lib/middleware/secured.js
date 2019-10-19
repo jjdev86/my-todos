@@ -12,3 +12,4 @@ module.exports = function () {
     res.redirect('/login');
   };
 };
+
