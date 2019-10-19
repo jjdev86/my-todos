@@ -81,8 +81,9 @@ if (app.get('env') === 'production') {
   // "Unable to verify authorization request state"
   // app.set('trust proxy', 1);
 }
-app.use( express.static(path.join(__dirname, './client/dist')))
+app.use( express.static(path.join(__dirname, './client/dist')));
 
+// app.use('/images')
 app.use(session(sess));
 
 app.use(passport.initialize());
