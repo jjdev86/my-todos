@@ -23,7 +23,8 @@ const {
   allTodos,
   incompleteTodos,
   completedTodos,
-  deleteAllTodos
+  deleteAllTodos,
+  getUser
 } = require("./server/database/db");
 
 // Configure Passport to use Auth0
@@ -81,7 +82,15 @@ if (app.get('env') === 'production') {
   // "Unable to verify authorization request state"
   // app.set('trust proxy', 1);
 }
-app.use( express.static(path.join(__dirname, './client/dist')));
+// get the user's info from db
+const getId = async (req, res, next) => {
+  let { displayName, nickname } = req.user;
+  req._iduser = await getUser(displayName, nickname)
+  next();
+};
+
+app.use(express.static(path.join(__dirname, './client/dist')));
+app.use('/static', express.static(path.join(__dirname, './server/login/public/stylesheets')))
 
 // app.use('/images')
 app.use(session(sess));
@@ -93,6 +102,7 @@ app.use(userInViews());
 app.use('/', authRouter);
 app.use('/', indexRouter);
 app.use('/', usersRouter);
+app.use(getId);
 // app.use(express.static('public'))
 // var aa = require('./client/dist')
 
@@ -102,36 +112,40 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+
 // Create new user
-app.post("/new-user", async (req, res) => {
-  // console.log(req.body);
-  const user = await newUser(req.body);
-  res.status(202).send(user);
-});
+// app.post("/new-user", async (req, res) => {
+//   // console.log(req.body);
+//   const user = await newUser(req.body);
+//   res.status(202).send(user);
+// });
 
 // Get all user todos
 app.get("/all-todos:id", async (req, res) => {
-//   console.log(req.params, `BODY`);
-  const All = await allTodos(req.params);
+  const All = await allTodos(`${req._iduser[0]._id}`);
   res.status(200).send(All);
 });
 // Get all incomplete todos
 app.get("/incomplete-todos:id", async (req, res) => {
-    const incompletes = await incompleteTodos(req.params.id)
-    res.status(200).send(incompletes);
+  const incompletes = await incompleteTodos(`${req._iduser[0]._id}`)
+  res.status(200).send(incompletes);
 });
 
 // Get all completed todos
 app.get("/completed-todos:id", async (req, res) => {
-    const completed = await completedTodos(req.params.id)
-    res.status(200).send(completed);
+  const completed = await completedTodos(`${req._iduser[0]._id}`)
+  res.status(200).send(completed);
 });
 
 // Add new todo
 app.post("/add-todo", async (req, res) => {
   // console.log(req.body)
+  // console.log(req._iduser, `from 'add-todo`)
+  req.body.userId = req._iduser[0]._id;
+  req.body.username = req._iduser[0].username;
+  console.log(req.body, `body of the add todo`)
   const todo = await addTodo(req.body);
-
+  console.log(todo, `after todo was created`);
   res.status(200).send(todo);
 });
 // Edit todo
@@ -141,25 +155,22 @@ app.patch("/edit-todo", async (req, res) => {
   res.status(200).send(update);
 });
 app.patch("/complete-todo", async (req, res) => {
-//   console.log(req.body, `in server file`);
   const update = await isComplete(req.body);
   res.status(200).send(update);
 });
 // Delete Todo
 app.delete("/remove-todo", async (req, res) => {
-  console.log(req.body);
   const deleted = await deleteTodo(req.body.id);
-  // res.status(200).send(JSON.stringify(req.body.id));
   res.status(200).send(deleted);
 });
 
 app.delete("/remove-all-todos:id", async (req, res) => {
-    const deleteAll = await deleteAllTodos(req.params.id)
-    try {
-        res.status(200).send('OK');
-    } catch(err) {
-        res.send(err);
-    };
+  const deleteAll = await deleteAllTodos(`${req._iduser[0]._id}`)
+  try {
+    res.status(200).send('OK');
+  } catch (err) {
+    res.send(err);
+  };
 
 });
 

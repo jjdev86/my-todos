@@ -100,6 +100,9 @@ if locals.user
                 button#add-todo.btn.btn-outline-success.my-2.btn-todo(onclick='createTodo(event)') Add
             // <div class="row">
             ul#todo-list.todos.col
+            .fetching-text Fetching Todos
+            .spinner-border.text-info(role='status' style='display: none')
+              span.sr-only Loading...
             // </div>
           // </div>
     #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
@@ -124,9 +127,9 @@ if locals.user
   // <script src="js/bootstrap.js"></script>
   script(src='main.js')
   script(type='text/javascript').
-    document.getElementById("todo-list").innerText = 'Getting Todos....'
-    setTimeout(() => {
+    //- document.getElementById("todo-list").innerText = 'Getting Todos....'
+    //- setTimeout(() => {
     document.getElementById("todo-list").innerText = '';
     displayAllTodos();
-    }, 1000);
+    //- }, 1000);
 

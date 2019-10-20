@@ -7,7 +7,7 @@ mongoose.connect("mongodb://localhost/todos", {
 var db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function() {
+db.once("open", function () {
   console.log('"we\'re connected!"');
 });
 
@@ -21,21 +21,40 @@ const TodoSchema = new mongoose.Schema({
 
 const Users = new mongoose.Schema({
   username: String,
-  password: String,
+  email: String,
   date: { type: Date, default: Date.now }
 });
 const Todo = mongoose.model("todo", TodoSchema);
 const User = mongoose.model("user", Users);
 
 const newUser = async username => {
+  // console.log(username, `from db line 31`)
   let response = await User.insertMany(username);
   try {
+    // console.log(response, `from db line 33`)
     return response;
   } catch (err) {
     return err;
   }
 };
 
+const getUser = async (email, username) => {
+  const user = await User.find({ email: email });
+  try {
+    if (!user.length) {
+      // create new user in db if not existing based on authentication
+      const adduser = {};
+      adduser.email = email;
+      adduser.username = username;
+      const nwUser = await newUser(adduser);
+      return nwUser;
+    } else {
+      return user;
+    }
+  } catch (err) {
+    return err;
+  }
+};
 const addTodo = async body => {
   const response = await Todo.insertMany(body);
   try {
@@ -79,9 +98,10 @@ const deleteTodo = async id => {
 };
 
 const allTodos = async id => {
-
-  const all = await Todo.find({ userId: id.id });
+  console.log(id, `inside alltodos db line 101`)
+  const all = await Todo.find({ userId: id });
   try {
+
     return all;
   } catch (err) {
     return err;
@@ -125,5 +145,6 @@ module.exports = {
   allTodos,
   incompleteTodos,
   completedTodos,
-  deleteAllTodos
+  deleteAllTodos,
+  getUser
 };
