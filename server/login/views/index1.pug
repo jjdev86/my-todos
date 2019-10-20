@@ -33,15 +33,15 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
     //-   button.btn.btn-search.custom-btn.my-2.my-sm-0(type='submit')
     //-     | Search
     if locals.user
-      a.mr-sm-2.my-2 Welcome #{user.nickname} 
-      span.a-borderspan |
+      a.mr-sm-2.my-2 Welcome, #{user.nickname} 
+      //- span.a-borderspan |
     if locals.user
-      a(href='/logout')
-        span.glyphicon.glyphicon-user.mr-sm-2
+      a(href='/logout').mr-sm-2.my-2
+        //- span.glyphicon.glyphicon-user.mr-sm-2
         |  Log Out
     else
-      a(href='/user')
-        span.glyphicon.glyphicon-log-in.mr-sm-2
+      a(href='/user').mr-sm-2.my-2
+        //- span.glyphicon.glyphicon-log-in.mr-sm-2
         |  Login
 // header img
 header
@@ -71,11 +71,6 @@ if locals.user
                 a.col-xs-3.col-sm-9.a-functiontext Dispaly All
               .row.custom-div
                 // <button class="btn col-xs-3 col-xs-3">icon</button>
-                span.col-xs-3.col-xs-3.oi.oi-trash(onclick='deleteAllTodos(); return false;')
-                // <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/trash.svg" onclick="deleteAllTodos(); return false;">
-                a.col-xs-3.col-sm-9.a-functiontext Delete All
-              .row.custom-div
-                // <button class="btn col-xs-3 col-xs-3">icon</button>
                 span.col-xs-3.col-xs-3.oi.oi-circle-check(onclick='displayCompletedTodos();')
                 // <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/circle-check.svg" onclick="displayCompletedTodos();">
                 a.col-xs-3.col-sm-9.a-functiontext Display Completed
@@ -84,6 +79,11 @@ if locals.user
                 span.col-xs-3.col-xs-3.oi.oi-magnifying-glass(onclick='displayIncompleteTodos();')
                 // <img class="col-xs-3 col-xs-3 custom-icon"  src="open-iconic/svg/magnifying-glass.svg" onclick="displayIncompleteTodos();">
                 a.col-xs-3.col-sm-9.a-functiontext Display Incomplete
+              .row.custom-div
+                // <button class="btn col-xs-3 col-xs-3">icon</button>
+                span.col-xs-3.col-xs-3.oi.oi-trash(onclick='deleteAllTodos(); return false;')
+                // <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/trash.svg" onclick="deleteAllTodos(); return false;">
+                a.col-xs-3.col-sm-9.a-functiontext Delete All
       // right side
       .col-xs-12.col-sm-9.right-side-content
         br
@@ -94,11 +94,11 @@ if locals.user
           #todos.container-fluid.custom-fluid
             .row.justify-content-md-center.add-todo
               .col-xl-9.offset-xl-3(align='center')
-                input.add-todo-input.form-control.mr-sm-2(type='text' placeholder='Add A New Todo' onkeypress='createTodo(event)')
+                input.add-todo-input.form-control.mr-sm-2(type='text' placeholder='Add New Todo' onkeypress='createTodo(event)')
                 button#add-todo.btn.btn-outline-success.my-2.btn-todo(onclick='createTodo(event)') Add
             // <div class="row">
             ul#todo-list.todos.col
-            .fetching-text Fetching Todos
+            //- .fetching-text Fetching Todos
             .spinner-border.text-info(role='status' style='display: none')
               span.sr-only Loading...
             // </div>

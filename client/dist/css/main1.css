@@ -52,31 +52,29 @@
   }
 }
 
-/* span {
-  font-size: 40px;
-  font-family: 'Reenie Beanie', cursive;
-} */
-
-.navbar {
-  font-size: 40px;
-  font-family: 'Reenie Beanie', cursive;
-  height: 60px;
-}
 
 .navbar a {
-  font-size: 2rem;
+  font-size: 1rem;
 }
 a {
   font-family: 'Lato', sans-serif;
 }
-.a-functiontext {
-  font-size: 1rem;
-  margin-left: 20px;
+
+.navbar-collapse >  a {
+  border-right: 1.2px solid grey;
+  padding-right: 14px;
 }
 
-.a-borderspan  {
-  /* border-right: 2px solid #000; */
+.navbar-collapse > a:last-child  {
+  border-right: 0;
+  padding-right: 0;
 }
+
+.navbar-collapse > ul > li > a:hover {
+  background-color: #058db5;
+  /* color: #fff; */
+}
+
 
 .logo-name {
   display: inline-block;
@@ -90,6 +88,7 @@ a {
   width: 30%;
   display: inline-flex;
 }
+
 .a-custom-logo {
   display: inline-flex;
   height: 100%;
@@ -105,6 +104,15 @@ a {
   margin-left: 0px;
 }
 
+a.borderspan {
+  height: 14px;
+}
+.a-functiontext {
+  font-size: 1rem;
+  margin-left: 20px;
+  /* margin-top: 3px; */
+}
+
 .right-side-content {
   background: #efefef;
   height: 600px;
@@ -118,25 +126,30 @@ a {
   list-style: none;
   overflow: auto;
 }
-
+.custom-fluid {
+  font-family: 'Lato', sans-serif;
+}
 .todo-container {
-  font-family: 'Reenie Beanie', cursive;
+  
   background: #fff;
   border: 1px solid #fff;
   margin: 4px 4px;
   border-radius: 2px;
   align-items: center;
-  height: 60px;
+  padding: 10px 10px;
+  /* height: 60px; */
+  height: auto;
   /* overflow: auto; */
   -moz-box-shadow: 3px 3px 3px rgb(128, 126, 126);
   -webkit-box-shadow: 3px 3px 3px rgb(128, 126, 126);
   box-shadow: 3px 3px 3px rgb(128, 126, 126);
 }
 .todo-container > span {
-  font-size: 40px;
+  font-family: 'Reenie Beanie', cursive;
+  font-size: 25px;
 }
-.todo-container > button {
-  /* font-size: 26px; */
+.todo-container > label >  span {
+  margin-left: 20px;
 }
 
 hr {
@@ -145,6 +158,7 @@ hr {
 .justify-content-md-center {
   width: 80%;
 }
+
 
 .btn,
 .checkbox-custom {
@@ -175,12 +189,16 @@ hr {
   background: #058db5;
   color: #fff;
   border: 1px solid #058db5;
-  margin: 2px 2px;
+  margin: 0px 6px 0 0;
 }
 .btn-edit:hover:enabled {
   background: #fff;
   color: #058db5;
   border: 1px solid;
+  margin: 0px 6px 0 0;
+}
+.btn:disabled {
+  margin: 0px 6px 0 0;
 }
 
 .btn-delete {
@@ -224,7 +242,7 @@ hr {
 }
 
 .custom-div > span {
-  font-size: 28px;
+  font-size: 23px;
 }
 .custom-container {
   margin: 40px 0px 0px 5px;
@@ -236,12 +254,12 @@ hr {
 }
 
 .oi {
-  height: 20px !important;
-  width: 20px !important;
+  height: 20px;
+  width: 20px;
   margin-left: 15px;
   color: black;
   cursor: pointer;
-  padding-top: 10px;
+  padding-top: 0px;
   /* padding-top: 0.199em; */
 }
 
