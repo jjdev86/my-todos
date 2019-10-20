@@ -9,10 +9,15 @@
     padding-left: 0;
   }
 }
-
-.header-img {
-  width: 100%;
+.page-header {
+  background: url("/static/images/header1.png") no-repeat center;
+  background-size: 100%;
+  object-fit: cover;
   height: 200px;
+}
+.header-img {
+  background: url("/static/images/header1.png") no-repeat center;
+  background-size: 100%;
   object-fit: cover;
 }
 
@@ -46,19 +51,49 @@
     border-right: 1px solid;
   }
 }
-span {
+
+/* span {
   font-size: 40px;
   font-family: 'Reenie Beanie', cursive;
-
-}
+} */
 
 .navbar {
   font-size: 40px;
   font-family: 'Reenie Beanie', cursive;
+  height: 60px;
+}
+
+.navbar a {
+  font-size: 2rem;
 }
 a {
-  font-size: 40px;
+  font-family: 'Lato', sans-serif;
+}
+.a-functiontext {
+  font-size: 1rem;
+  margin-left: 20px;
+}
+
+.a-borderspan  {
+  /* border-right: 2px solid #000; */
+}
+
+.logo-name {
+  display: inline-block;
+  color: #058db5;
+ letter-spacing: 5px;
+  font-size: 70px;
+  background-color: transparent;
+}
+.a-logo-container {
   font-family: 'Reenie Beanie', cursive;
+  width: 30%;
+  display: inline-flex;
+}
+.a-custom-logo {
+  display: inline-flex;
+  height: 100%;
+  margin-top: 57px;
 }
 #sidebar {
   padding: 15px;
@@ -67,7 +102,7 @@ a {
 
 .sidebar-nav .nav {
   margin-top: 40px;
-  margin-left: 15px;
+  margin-left: 0px;
 }
 
 .right-side-content {
@@ -85,6 +120,7 @@ a {
 }
 
 .todo-container {
+  font-family: 'Reenie Beanie', cursive;
   background: #fff;
   border: 1px solid #fff;
   margin: 4px 4px;
@@ -95,6 +131,12 @@ a {
   -moz-box-shadow: 3px 3px 3px rgb(128, 126, 126);
   -webkit-box-shadow: 3px 3px 3px rgb(128, 126, 126);
   box-shadow: 3px 3px 3px rgb(128, 126, 126);
+}
+.todo-container > span {
+  font-size: 40px;
+}
+.todo-container > button {
+  /* font-size: 26px; */
 }
 
 hr {
@@ -180,8 +222,13 @@ hr {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.custom-div > span {
+  font-size: 28px;
+}
 .custom-container {
-  margin: 40px 0px 0px 15px;
+  margin: 40px 0px 0px 5px;
+  /* padding: 0 0 !important; */
 }
 
 .custom-fluid {
@@ -189,12 +236,13 @@ hr {
 }
 
 .oi {
-  height: 12px;
-  width: 12px;
+  height: 20px !important;
+  width: 20px !important;
   margin-left: 15px;
   color: black;
   cursor: pointer;
-  padding-top: 0.199em;
+  padding-top: 10px;
+  /* padding-top: 0.199em; */
 }
 
 .oi:hover {

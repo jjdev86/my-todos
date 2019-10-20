@@ -84,13 +84,16 @@ if (app.get('env') === 'production') {
 }
 // get the user's info from db
 const getId = async (req, res, next) => {
-  let { displayName, nickname } = req.user;
-  req._iduser = await getUser(displayName, nickname)
+  if (req.user) {
+    let { displayName, nickname } = req.user;
+    req._iduser = await getUser(displayName, nickname)
+  }
   next();
 };
 
-app.use(express.static(path.join(__dirname, './client/dist')));
-app.use('/static', express.static(path.join(__dirname, './server/login/public/stylesheets')))
+app.use('/static', express.static(path.join(__dirname, 'client/dist')));
+// app.use(express.static(path.join(__dirname, '/client/dist')));
+// app.use('/static', express.static(path.join(__dirname, './server/login/public/stylesheets')))
 
 // app.use('/images')
 app.use(session(sess));
