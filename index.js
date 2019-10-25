@@ -124,7 +124,7 @@ app.use(bodyParser.json());
 // });
 
 // Get all user todos
-app.get("/all-todos:id", async (req, res) => {
+app.get("/all-todos", async (req, res) => {
   const All = await allTodos(`${req._iduser[0]._id}`);
   res.status(200).send(All);
 });

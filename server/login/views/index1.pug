@@ -27,13 +27,13 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
         a.nav-link(href='/about') About
       li.nav-item
         a.nav-link(href='#' tabindex='-1') Contact
-    
+
     //- form.form-inline.my-2.my-lg-0
     //-   input.form-control.mr-sm-2(type='search' placeholder='Search Todo' aria-label='Search')
     //-   button.btn.btn-search.custom-btn.my-2.my-sm-0(type='submit')
     //-     | Search
     if locals.user
-      a.mr-sm-2.my-2 Welcome, #{user.nickname} 
+      a.mr-sm-2.my-2 Welcome, #{user.nickname}
       //- span.a-borderspan |
     if locals.user
       a(href='/logout').mr-sm-2.my-2
@@ -58,42 +58,36 @@ header
 if locals.user
   .container-fluid
     .row.row-offcanvas.row-offcanvas-left
-      #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation')
+      // leftside
+      //- #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation')
+      #sidebar.col-xs-4.col-sm-4.col-md-2.col-lg-2.col-xl-2.sidebar-offcanvas(role='navigation')
         .sidebar-nav
           .nav
             .container.custom-container
               .row.custom-div
-                // <button class="btn col-xs-3 col-xs-3 custom-btn">icon</button>
-                // <span class="oi oi-task col-xs-3 col-xs-3"></span>
-                // <span class="iconic iconic-task col-xs-3 col-xs-3" title="task" aria-hidden="false"></span>
-
-                span.col-xs-3.col-xs-3.oi.oi-task(onclick='displayAllTodos()')
-                a.col-xs-3.col-sm-9.a-functiontext Dispaly All
+                span.oi.oi-task(onclick='displayAllTodos()')
+                a.a-functiontext All
               .row.custom-div
-                // <button class="btn col-xs-3 col-xs-3">icon</button>
-                span.col-xs-3.col-xs-3.oi.oi-circle-check(onclick='displayCompletedTodos();')
-                // <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/circle-check.svg" onclick="displayCompletedTodos();">
-                a.col-xs-3.col-sm-9.a-functiontext Display Completed
+                span.oi.oi-magnifying-glass(onclick='displayIncompleteTodos();')
+                a.a-functiontext Active
               .row.custom-div
-                // <button class="btn col-xs-3 col-xs-3">icon</button>
-                span.col-xs-3.col-xs-3.oi.oi-magnifying-glass(onclick='displayIncompleteTodos();')
-                // <img class="col-xs-3 col-xs-3 custom-icon"  src="open-iconic/svg/magnifying-glass.svg" onclick="displayIncompleteTodos();">
-                a.col-xs-3.col-sm-9.a-functiontext Display Incomplete
+                span.oi.oi-circle-check(onclick='displayCompletedTodos();')
+                a.a-functiontext Completed
+              //- .row.custom-div.col-xs-12.col-sm-12.col-md-5.col-lg-5
               .row.custom-div
-                // <button class="btn col-xs-3 col-xs-3">icon</button>
-                span.col-xs-3.col-xs-3.oi.oi-trash(onclick='deleteAllTodos(); return false;')
-                // <img class="col-xs-3 col-xs-3 custom-icon" src="open-iconic/svg/trash.svg" onclick="deleteAllTodos(); return false;">
-                a.col-xs-3.col-sm-9.a-functiontext Delete All
+                span.oi.oi-trash(onclick='deleteAllTodos(); return false;')
+                a.a-functiontext Delete All
       // right side
-      .col-xs-12.col-sm-9.right-side-content
+      //- .col-xs-12.col-sm-9.right-side-content(style="height: 800px")
+      .col-xs-8.col-sm-8.col-md-12.col-lg-10.col-xl-10.right-side-content(style="height: 800px")
         br
         .jumbotron-right
           a.visible-xs(href='#' data-toggle='offcanvas')
             i.fa.fa-lg.fa-reorder
           // <div class="container">
-          #todos.container-fluid.custom-fluid
+          #todos.container-fluid.custom-fluid.col-md-12
             .row.justify-content-md-center.add-todo
-              .col-xl-9.offset-xl-3(align='center')
+              .col-xl-9.offset-xl-3.col-lg-10.offset-lg-1.col-md-10.offset-sm-1(align='center')
                 input.add-todo-input.form-control.mr-sm-2(type='text' placeholder='Add New Todo' onkeypress='createTodo(event)')
                 button#add-todo.btn.btn-outline-success.my-2.btn-todo(onclick='createTodo(event)') Add
             // <div class="row">
@@ -117,9 +111,9 @@ if locals.user
               | Save
               | changes
             button.btn.btn-modal-close(type='button' data-dismiss='modal') Close
-    hr
-    footer
-      p &copy; Jose Valadez 2019
+    .a-bottom-footer
+  footer
+    p &copy; Jose Valadez 2019
   script(src='/static/js/bootstrap.min.js')
   script(src='/static/js/bootstrap.bundle.min.js')
   // <script src="js/bootstrap.js"></script>

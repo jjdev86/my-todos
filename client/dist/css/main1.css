@@ -25,6 +25,10 @@
     background: #EFEFEF;
     height: auto;
 } */
+.container-fluid {
+  padding: 0 0;
+}
+
 
 @media screen and (max-width: 768px) {
   .row-offcanvas {
@@ -49,6 +53,22 @@
     width: 40%;
     margin-left: 12px;
     border-right: 1px solid;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .jumbotron-right > div {
+    padding: 0px 0 0 80px;
+  }
+  /* .col-xl-9 {
+    width: 95%;
+    padding-left: 40px;
+  } */
+}
+
+@media screen and (max-width: 862px) {
+  #sidebar {
+    padding: 15px 0 !important;
   }
 }
 
@@ -109,8 +129,7 @@ a.borderspan {
 }
 .a-functiontext {
   font-size: 1rem;
-  margin-left: 20px;
-  /* margin-top: 3px; */
+  padding-left: 10px;
 }
 
 .right-side-content {
@@ -130,7 +149,7 @@ a.borderspan {
   font-family: 'Lato', sans-serif;
 }
 .todo-container {
-  
+
   background: #fff;
   border: 1px solid #fff;
   margin: 4px 4px;
@@ -352,4 +371,10 @@ hr {
 input[type="text"],
 .add-todo-input {
   outline: none;
+}
+
+.spinner-border {
+  margin-left: 45%;
+  margin-right: 30%;
+  margin-top: 30px;
 }

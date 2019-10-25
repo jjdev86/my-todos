@@ -146,12 +146,13 @@ const incompleteTodo = (e, span, _id) => {
 
 const displayAllTodos = () => {
   // get all todos from storage
-  const _id = localStorage.getItem("userId");
+
   document.getElementsByClassName('spinner-border')[0].style.display = '';
+  document.getElementById("todo-list").innerText = '';
 
   setTimeout(() => {
     // get todos from db
-    fetch(`/all-todos${_id}`, {
+    fetch(`/all-todos`, {
       method: "GET", // or 'PUT'
       // body: JSON.stringify({_id }), // data can be `string` or {object}!
       headers: {
@@ -176,7 +177,7 @@ const displayAllTodos = () => {
       })
       .catch(err => console.log(err));
 
-  }, 3000)
+  }, 1000)
 
 };
 
