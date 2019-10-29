@@ -16,18 +16,15 @@ router.get('/', async (req, res, next) => {
       console.log(err, `error in line 15`)
       // return err;
     }
+    res.render('index1', { title: 'Auth0 Webapp sample Nodejs' });
+  } else {
+    res.render('loginPage', {title: 'Login'});
   }
-  res.render('index1', { title: 'Auth0 Webapp sample Nodejs' });
   // res.render('index1', { title: 'Auth0 Webapp sample Nodejs' });
 });
 
-router.get('/about', function (req, res, next) {
-  if (req.user) {
-    res.render('layout', { title: 'This works for about' });
-  } else {
-    req.session.returnTo = req.originalUrl;
-    res.redirect('/login');
-  }
+router.get('/contact', function (req, res, next) {
+  res.render('contact', { title: 'Contact Us' });
 });
 
 module.exports = router;

@@ -20,13 +20,11 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
   #navbarSupportedContent.collapse.navbar-collapse
     ul.navbar-nav.mr-auto
       li.nav-item.active
-        a.nav-link(href='#')
+        a.nav-link(href='/')
           | Home
           span.sr-only (current)
       li.nav-item
-        a.nav-link(href='/about') About
-      li.nav-item
-        a.nav-link(href='#' tabindex='-1') Contact
+        a.nav-link(href='/contact' tabindex='-1') Contact
 
     //- form.form-inline.my-2.my-lg-0
     //-   input.form-control.mr-sm-2(type='search' placeholder='Search Todo' aria-label='Search')
@@ -51,77 +49,79 @@ header
       div
         img.a-logo(src="/static/images/logo1.png" alt="logo" style="margin-left: 30px")
       div.a-custom-logo
-        h1.logo-name ToDos
+        h1.logo-name To-Dos
       div
         h6(style='display: none')| Photo by Glenn Carstens-Peters on Unsplash
-// Container
-if locals.user
-  .container-fluid
-    .row.row-offcanvas.row-offcanvas-left
-      // leftside
-      //- #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation')
-      #sidebar.col-xs-4.col-sm-4.col-md-2.col-lg-2.col-xl-2.sidebar-offcanvas(role='navigation')
-        .sidebar-nav
-          .nav
-            .container.custom-container
-              .row.custom-div
-                span.oi.oi-task(onclick='displayAllTodos()')
-                a.a-functiontext All
-              .row.custom-div
-                span.oi.oi-magnifying-glass(onclick='displayIncompleteTodos();')
-                a.a-functiontext Active
-              .row.custom-div
-                span.oi.oi-circle-check(onclick='displayCompletedTodos();')
-                a.a-functiontext Completed
-              //- .row.custom-div.col-xs-12.col-sm-12.col-md-5.col-lg-5
-              .row.custom-div
-                span.oi.oi-trash(onclick='deleteAllTodos(); return false;')
-                a.a-functiontext Delete All
-      // right side
-      //- .col-xs-12.col-sm-9.right-side-content(style="height: 800px")
-      .col-xs-8.col-sm-8.col-md-12.col-lg-10.col-xl-10.right-side-content(style="height: 800px")
-        br
-        .jumbotron-right
-          a.visible-xs(href='#' data-toggle='offcanvas')
-            i.fa.fa-lg.fa-reorder
-          // <div class="container">
-          #todos.container-fluid.custom-fluid.col-md-12
-            .row.justify-content-md-center.add-todo
-              .col-xl-9.offset-xl-3.col-lg-10.offset-lg-1.col-md-10.offset-sm-1(align='center')
-                input.add-todo-input.form-control.mr-sm-2(type='text' placeholder='Add New Todo' onkeypress='createTodo(event)')
-                button#add-todo.btn.btn-outline-success.my-2.btn-todo(onclick='createTodo(event)') Add
-            // <div class="row">
-            ul#todo-list.todos.col
-            //- .fetching-text Fetching Todos
-            .spinner-border.text-info(role='status' style='display: none')
-              span.sr-only Loading...
-            // </div>
+.container-fluid
+  .row.row-offcanvas.row-offcanvas-left
+    // leftside
+    //- #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation')
+    #sidebar.col-xs-4.col-sm-4.col-md-2.col-lg-2.col-xl-2.sidebar-offcanvas(role='navigation')
+      .sidebar-nav
+        .nav
+          .container.custom-container
+            .row.custom-div
+              span.oi.oi-task(onclick='displayAllTodos()')
+              a.a-functiontext All
+            .row.custom-div
+              span.oi.oi-magnifying-glass(onclick='displayIncompleteTodos();')
+              a.a-functiontext Active
+            .row.custom-div
+              span.oi.oi-circle-check(onclick='displayCompletedTodos();')
+              a.a-functiontext Completed
+            //- .row.custom-div.col-xs-12.col-sm-12.col-md-5.col-lg-5
+            .row.custom-div
+              span.oi.oi-trash(onclick='deleteAllTodos(); return false;')
+              a.a-functiontext Delete All
+    // right side
+    //- .col-xs-12.col-sm-9.right-side-content(style="height: 800px")
+    .col-xs-8.col-sm-8.col-md-12.col-lg-10.col-xl-10.right-side-content(style="")
+      br
+      .jumbotron-right
+        a.visible-xs(href='#' data-toggle='offcanvas')
+          i.fa.fa-lg.fa-reorder
+        // <div class="container">
+        #todos.container-fluid.custom-fluid.col-md-12
+          .row.justify-content-md-center.add-todo
+            .col-xl-9.offset-xl-3.col-lg-10.offset-lg-1.col-md-10.offset-sm-1(align='center')
+              input.add-todo-input.form-control.mr-sm-2(type='text' placeholder='Add New Todo' onkeypress='createTodo(event)')
+              button#add-todo.btn.btn-outline-success.my-2.btn-todo(onclick='createTodo(event)') Add
+          // <div class="row">
+          ul#todo-list.todos.col
+          //- .fetching-text Fetching Todos
+          .spinner-border.text-info(role='status' style='display: none')
+            span.sr-only Loading...
           // </div>
-    #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
-      .modal-dialog(role='document')
-        .modal-content
-          .modal-header
-            h5.modal-title Update Your Todo
-            button.close(type='button' data-dismiss='modal' aria-label='Close')
-              span(aria-hidden='true') &times;
-          .modal-body
-            input#modal-input(placeholder='Type your todo' type='text' onkeyup='validateSave(this)')
-          .modal-footer
-            button#save-modal.btn.btn-primary(type='button')
-              | Save
-              | changes
-            button.btn.btn-modal-close(type='button' data-dismiss='modal') Close
-    .a-bottom-footer
-  footer
-    p &copy; Jose Valadez 2019
-  script(src='/static/js/bootstrap.min.js')
-  script(src='/static/js/bootstrap.bundle.min.js')
-  // <script src="js/bootstrap.js"></script>
-  script(src='/static/main.js')
-  script(type='text/javascript').
-    //- document.getElementById("todo-list").innerText = 'Getting Todos....'
-    //- setTimeout(() => {
-    document.getElementById("todo-list").innerText = '';
-    displayAllTodos();
-    //- }, 1000);
+        // </div>
+  #exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          h5.modal-title Update Your Todo
+          button.close(type='button' data-dismiss='modal' aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          input#modal-input(placeholder='Type your todo' type='text' onkeyup='validateSave(this)')
+        .modal-footer
+          button#save-modal.btn.btn-primary(type='button')
+            | Save
+            | changes
+          button.btn.btn-modal-close(type='button' data-dismiss='modal') Close
+  .a-bottom-footer
+footer
+  .a-copyright
+    p.text-center(style="margin-bottom: 0") &copy;2019 Jose Valadez
+  p(style='text-align:center;')
+    a(href='https://www.linkedin.com/in/jose-valadez-43038b188/' target='_blank')
+      img(alt='' src='/static/images/linked.svg' style='height:20px; width:20px')
+script(src='/static/js/bootstrap.min.js')
+script(src='/static/js/bootstrap.bundle.min.js')
+// <script src="js/bootstrap.js"></script>
+script(src='/static/main.js')
+script(type='text/javascript').
+  //- document.getElementById("todo-list").innerText = 'Getting Todos....'
+  //- setTimeout(() => {
+  document.getElementById("todo-list").innerText = '';
+  displayAllTodos();
+  //- }, 1000);
 
