@@ -4,6 +4,7 @@ var session = require('express-session');
 const port = 3000;
 const bodyParser = require("body-parser");
 var cookieParser = require('cookie-parser');
+const cors = require('cors');
 // Load environment variables from .env
 var dotenv = require('dotenv');
 dotenv.config();
@@ -61,7 +62,7 @@ app.set('views', path.join(__dirname, '/server/login/views'));
 app.set('view engine', 'pug');
 
 app.use(cookieParser());
-
+app.use(cors());
 // config express-session
 var sess = {
   secret: 'Cuando regreses al giga ranch',
