@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
+require('dotenv').config()
 
-mongoose.connect("mongodb://localhost/todos", {
+mongoose.connect(
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@server1-lpsq6.mongodb.net/TodosDB?retryWrites=true&w=majority
+  `, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -98,7 +101,6 @@ const deleteTodo = async id => {
 };
 
 const allTodos = async id => {
-  console.log(id, `inside alltodos db line 101`)
   const all = await Todo.find({ userId: id });
   try {
 

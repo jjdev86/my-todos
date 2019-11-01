@@ -10,15 +10,13 @@ router.get('/', async (req, res, next) => {
     let { displayName, nickname } = req.user;
     let user = await getUser(displayName, nickname);
     try {
-      console.log(user, `user after validation line 13 in index.js`);
       // return user;
     } catch (err) {
-      console.log(err, `error in line 15`)
       // return err;
     }
-    res.render('index1', { title: 'Auth0 Webapp sample Nodejs' });
+    res.render('todos', { title: 'Todos Page' });
   } else {
-    res.render('loginPage', {title: 'Login'});
+    res.render('index', {title: 'Login'});
   }
   // res.render('index1', { title: 'Auth0 Webapp sample Nodejs' });
 });

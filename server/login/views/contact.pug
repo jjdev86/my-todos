@@ -6,37 +6,30 @@ head
     meta(http-equiv='X-UA-Compatible' content='ie=edge')
     meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
     script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous')
-    link(href='/static/css/bootstrap.min.css' rel='stylesheet')
-    link(rel='stylesheet' href='/static/open-iconic/font/css/open-iconic-bootstrap.min.css')
     link(rel='stylesheet' href='/static/css/main1.css')
-    link(href='/static/open-iconic/font/css/open-iconic.css' rel='stylesheet')
     link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons')
-    //- link(rel='stylesheet' href='https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css' integrity='sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX' crossorigin='anonymous')
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous")
     link(href="https://fonts.googleapis.com/css?family=Reenie+Beanie&display=swap" rel="stylesheet")
     link(href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet")
-
+    
     // Font Awesome
-    //- link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css')
+    link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css')
     // Bootstrap core CSS
     link(href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet')
     // Material Design Bootstrap
     link(href='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css' rel='stylesheet')
-    //- script(src='https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js' integrity='sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9' crossorigin='anonymous')
-    script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js' crossorigin='anonymous')
     title my-Todos
-nav.navbar.navbar-expand-lg.navbar-light.bg-light
+nav.navbar.navbar-expand-lg.navbar-light
   button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
     span.navbar-toggler-icon
   #navbarSupportedContent.collapse.navbar-collapse
     ul.navbar-nav.mr-auto
-      li.nav-item.active
+      li.nav-item
         a.nav-link(href='/')
           | Home
-          span.sr-only (current)
+          //- span.sr-only (current)
       li.nav-item
-        a.nav-link(href='contact' tabindex='-1') Contact us
-
+        a.nav-link(href='contact' tabindex='-1') Contact Us
+          span.sr-only (current)
     //- form.form-inline.my-2.my-lg-0
     //-   input.form-control.mr-sm-2(type='search' placeholder='Search Todo' aria-label='Search')
     //-   button.btn.btn-search.custom-btn.my-2.my-sm-0(type='submit')
@@ -60,75 +53,61 @@ header
       div
         img.a-logo(src="/static/images/logo1.png" alt="logo" style="margin-left: 30px")
       div.a-custom-logo
-        h1.logo-name To-Dos
+        h1.logo-name(style="font-weight:600") To-Dos
       div
         h6(style='display: none')| Photo by Glenn Carstens-Peters on Unsplash
 .container.a-custom-container
-  section.mb-4
-  // Section heading
-  h2.h1-responsive.font-weight-bold.text-center.my-4 Contact us
-  // Section description
-  p.text-center.w-responsive.mx-auto.mb-5
-    | Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within
-    | a matter of hours to help you.
-  .row
-    // Grid column
-    .col-md-9.mb-md-0.mb-5
-      form#contact-form(name='contact-form' action='mail.php' method='POST')
-        // Grid row
-        .row
-          // Grid column
-          .col-md-6
-            .md-form.mb-0
-              input#name.form-control(type='text' name='name')
-              label(for='name') Your name
-          // Grid column
-          // Grid column
-          .col-md-6
-            .md-form.mb-0
-              input#email.form-control(type='text' name='email')
-              label(for='email') Your email
-          // Grid column
-        // Grid row
-        // Grid row
-        .row
-          .col-md-12
-            .md-form.mb-0
-              input#subject.form-control(type='text' name='subject')
-              label(for='subject') Subject
-        // Grid row
-        // Grid row
-        .row
-          // Grid column
-          .col-md-12
-            .md-form
-              textarea#message.form-control.md-textarea(type='text' name='message' rows='2')
-              label(for='message') Your message
-        // Grid row
-      .text-center.text-md-left
-        a.btn.btn-primary(onclick="document.getElementById('contact-form').submit();") Send
-      .status
-    // Grid column
-    // Grid column
-    .col-md-3.text-center
-      ul.list-unstyled.mb-0
-        li
-          i.fas.fa-map-marker-alt.fa-2x
-          p San Francisco, CA 94126, USA
-        li
-          i.fas.fa-phone.mt-4.fa-2x
-          p + 01 234 567 89
-        li
-          i.fas.fa-envelope.mt-4.fa-2x
-          p contact@mdbootstrap.com
-footer
+  #modalContactForm.modal.fade(tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true')
+  // Modal: Contact form
+  .modal-dialog.cascading-modal(role='document')
+    // Content
+    .modal-content
+      // Header
+      .modal-header.white-text(style="background-color: #058db5")
+        h4.title
+          i.fa.fa-pencil-alt
+          |  Contact Us
+        button.close.waves-effect.waves-light(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true') &times;
+      // Body
+      .modal-body
+        // Material input name
+        .md-form.form-sm
+          i.fa.fa-envelope.prefix
+          input#materialFormNameModalEx1.form-control.form-control-sm(type='text')
+          label(for='materialFormNameModalEx1') Your name
+        // Material input email
+        .md-form.form-sm
+          i.fa.fa-lock.prefix
+          input#materialFormEmailModalEx1.form-control.form-control-sm(type='text')
+          label(for='materialFormEmailModalEx1') Your email
+        // Material input subject
+        .md-form.form-sm
+          i.fa.fa-tag.prefix
+          input#materialFormSubjectModalEx1.form-control.form-control-sm(type='text')
+          label(for='materialFormSubjectModalEx1') Subject
+        // Material textarea message
+        .md-form.form-sm
+          i.fa.fa-pencil-alt.prefix
+          textarea#materialFormMessageModalEx1.md-textarea.form-control(type='text')
+          label(for='materialFormMessageModalEx1') Your message
+        .text-center.mt-4.mb-2
+          button.btn.white-text(style="background-color: #058db5;")
+            | Send
+            i.fa.fa-send.ml-2
+    // /.Content
+  // /Modal: Contact form
+footer(style="position: relative; bottom: 0")
   .a-copyright
     p.text-center(style="margin-bottom: 0") &copy;2019 Jose Valadez
   p(style='text-align:center;')
     a(href='https://www.linkedin.com/in/jose-valadez-43038b188/' target='_blank')
       img(alt='' src='/static/images/linked.svg' style='height:20px; width:20px')
 
-//- script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous')
-
-// JQuery
-script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js' crossorigin='anonymous')
+script(type='text/javascript' src='/static/js/jquery-3.4.1.min.js')
+// Bootstrap tooltips
+script(type='text/javascript' src='/static/js/popper.min.js')
+// Bootstrap core JavaScript
+script(type='text/javascript' src='/static/js/bootstrap.min.js')
+// MDB core JavaScript
+script(type='text/javascript' src='/static/js/mdb.min.js')

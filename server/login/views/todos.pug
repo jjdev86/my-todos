@@ -13,8 +13,15 @@ head
     link(href='/static/open-iconic/font/css/open-iconic.css' rel='stylesheet')
     link(href="https://fonts.googleapis.com/css?family=Reenie+Beanie&display=swap" rel="stylesheet")
     link(href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet")
+    
+    // Font Awesome
+    link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.8.2/css/all.css')
+    // Bootstrap core CSS
+    //- link(href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet')
+    // Material Design Bootstrap
+    //- link(href='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css' rel='stylesheet')
     title my-Todos
-nav.navbar.navbar-expand-lg.navbar-light.bg-light
+nav.navbar.navbar-expand-lg.navbar-light
   button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
     span.navbar-toggler-icon
   #navbarSupportedContent.collapse.navbar-collapse
@@ -23,8 +30,8 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
         a.nav-link(href='/')
           | Home
           span.sr-only (current)
-      li.nav-item
-        a.nav-link(href='/contact' tabindex='-1') Contact
+      li.nav-item.active
+        a.nav-link(href='/contact' tabindex='-1') Contact Us
 
     //- form.form-inline.my-2.my-lg-0
     //-   input.form-control.mr-sm-2(type='search' placeholder='Search Todo' aria-label='Search')
@@ -61,7 +68,7 @@ header
         .nav
           .container.custom-container
             .row.custom-div
-              span.oi.oi-task(onclick='displayAllTodos()')
+              span.oi.oi-task(onclick='getTodos()')
               a.a-functiontext All
             .row.custom-div
               span.oi.oi-magnifying-glass(onclick='displayIncompleteTodos();')
@@ -108,7 +115,7 @@ header
             | changes
           button.btn.btn-modal-close(type='button' data-dismiss='modal') Close
   .a-bottom-footer
-footer
+footer(style="position: inheret; bottom: 0")
   .a-copyright
     p.text-center(style="margin-bottom: 0") &copy;2019 Jose Valadez
   p(style='text-align:center;')
@@ -122,6 +129,6 @@ script(type='text/javascript').
   //- document.getElementById("todo-list").innerText = 'Getting Todos....'
   //- setTimeout(() => {
   document.getElementById("todo-list").innerText = '';
-  displayAllTodos();
+  getTodos();
   //- }, 1000);
 

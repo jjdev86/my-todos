@@ -1,23 +1,4 @@
-// let user = null;
-// if (localStorage.getItem("user") == null) {
-//   let user = prompt("enter your username");
-//   const data = {};
-//   data.username = user;
-//   fetch("/new-user", {
-//     method: "POST", // or 'PUT'
-//     body: JSON.stringify(data), // data can be `string` or {object}!
-//     headers: {
-//       "Content-Type": "application/json"
-//     }
-//   })
-//     .then(response => response.json())
-//     .then(data => {
-//       localStorage.setItem("user", data[0].username);
-//       localStorage.setItem("userId", data[0]._id);
-//     })
-//     .catch(err => console.log(err));
-// }
-
+// Core Functions to create todo
 const createTodo = event => {
   // get todo input value
   var char = event.which || event.keyCode;
@@ -29,7 +10,6 @@ const createTodo = event => {
       const todo = {};
       todo.todo = input.value;
       todo.userId = localStorage.getItem("userId");
-      console.log(todo, `line 32`)
       todo.username = localStorage.getItem('user');
       fetch("/add-todo", {
         method: "POST", // or 'PUT'
@@ -40,7 +20,6 @@ const createTodo = event => {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data, `todo`)
           addTodo(data[0])
           input.value = "";
         })
@@ -49,11 +28,6 @@ const createTodo = event => {
   }
 
 };
-
-
-/******************************************************************************\
- * =======================ALTER TODO =================== *
- ******************************************************************************/
 
 const updateTodo = (id) => {
   // get Modal input value
@@ -71,7 +45,7 @@ const updateTodo = (id) => {
   })
     .then(response => response.json())
     .then(data => {
-      displayAllTodos();
+      getTodos();
     })
     .catch(err => console.log(err));
   var myModal = document.getElementById("save-modal");
@@ -79,6 +53,7 @@ const updateTodo = (id) => {
   update.value = "";
 
 };
+
 
 const deleteTodo = () => {
   const parentNode = document.getElementById("todo-list");
@@ -99,9 +74,6 @@ const deleteTodo = () => {
     })
 };
 
-/******************************************************************************\
- * =======================FILTER BY TODO STATUS FUNCTIONS =================== *
- ******************************************************************************/
 
 const completedTodo = (e, span, _id) => {
 
@@ -144,7 +116,9 @@ const incompleteTodo = (e, span, _id) => {
 
 };
 
-const displayAllTodos = () => {
+
+// API functions
+const getTodos = () => {
   // get all todos from storage
 
   document.getElementsByClassName('spinner-border')[0].style.display = '';
@@ -154,7 +128,6 @@ const displayAllTodos = () => {
     // get todos from db
     fetch(`/all-todos`, {
       method: "GET", // or 'PUT'
-      // body: JSON.stringify({_id }), // data can be `string` or {object}!
       headers: {
         "Content-Type": "application/json"
       }
@@ -162,7 +135,6 @@ const displayAllTodos = () => {
       .then(response => response.json())
       .then(data => {
         document.getElementsByClassName('spinner-border')[0].style.display = 'none';
-        console.log(data, `from displayAllTodos`);
         document.getElementById("todo-list").innerHTML = "";
         data.forEach((todo, index) => {
 
@@ -176,61 +148,7 @@ const displayAllTodos = () => {
         });
       })
       .catch(err => console.log(err));
-
   }, 1000)
-
-};
-
-const deleteAllTodos = () => {
-  // localStorage.setItem("allTodos", "[]");
-  const _id = localStorage.getItem("userId");
-  // get todos from db
-  fetch(`/remove-all-todos${_id}`, {
-    method: "DELETE", // or 'PUT'
-    // body: JSON.stringify({_id }), // data can be `string` or {object}!
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-    .then(data => {
-      // console.log(data, `response`)
-      document.getElementById("todo-list").innerHTML = "";
-    })
-    .catch(err => console.log(err));
-};
-
-/******************************************************************************\
- * ============================HELPER FUNCTIONS================================/
- ******************************************************************************/
-
-const addTodo = (data) => {
-  let li = document.createElement("li");
-  li.setAttribute("id", data._id);
-  li.className = "col-xl-10 offset-xl-1 li";
-  // create edit button with eventListner
-  const editButton = editBtn();
-  // create delete button with eventListner
-  const deleteButton = deletebtn();
-  // create checkbox
-  const checkbox = checkBox(data.isComplete);
-  // create span tag
-  const span = document.createElement("span");
-  // div to contain checkbox, span, edit and delete buttons
-  const div = document.createElement("div");
-  // div.classList.add('row', 'todo-container');
-  div.className = "row todo-container";
-  // set input value to span tag
-  // span.innerText = input.value;
-  span.innerText = data.todo;
-  span.className = "col-xl-9 col-lg-9 col-md-8 col-sm-6";
-
-  const ul = document.getElementById("todo-list");
-  // append elements to div
-  div.append(checkbox, span, editButton, deleteButton);
-  // div.setAttribute('class', 'todo-container', 'row');
-  // append div to li and li to ul
-  ul.appendChild(li).append(div);
-  // store todo in client storage
 };
 
 const displayCompletedTodos = () => {
@@ -289,6 +207,60 @@ const displayIncompleteTodos = () => {
     })
     .catch(err => console.log(err));
 };
+
+const deleteAllTodos = () => {
+  // localStorage.setItem("allTodos", "[]");
+  const _id = localStorage.getItem("userId");
+  // get todos from db
+  fetch(`/remove-all-todos${_id}`, {
+    method: "DELETE", // or 'PUT'
+    // body: JSON.stringify({_id }), // data can be `string` or {object}!
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(data => {
+      // console.log(data, `response`)
+      document.getElementById("todo-list").innerHTML = "";
+    })
+    .catch(err => console.log(err));
+};
+
+
+/******************************************************************************\
+ * ============================HELPER FUNCTIONS================================/
+ ******************************************************************************/
+
+const addTodo = (data) => {
+  let li = document.createElement("li");
+  li.setAttribute("id", data._id);
+  li.className = "col-xl-10 offset-xl-1 li";
+  // create edit button with eventListner
+  const editButton = editBtn();
+  // create delete button with eventListner
+  const deleteButton = deletebtn();
+  // create checkbox
+  const checkbox = checkBox(data.isComplete);
+  // create span tag
+  const span = document.createElement("span");
+  // div to contain checkbox, span, edit and delete buttons
+  const div = document.createElement("div");
+  // div.classList.add('row', 'todo-container');
+  div.className = "row todo-container";
+  // set input value to span tag
+  // span.innerText = input.value;
+  span.innerText = data.todo;
+  span.className = "col-xl-9 col-lg-9 col-md-8 col-sm-6";
+
+  const ul = document.getElementById("todo-list");
+  // append elements to div
+  div.append(checkbox, span, editButton, deleteButton);
+  // div.setAttribute('class', 'todo-container', 'row');
+  // append div to li and li to ul
+  ul.appendChild(li).append(div);
+  // store todo in client storage
+};
+
 
 const createFilteredTodo = todo => {
   const div = document.createElement("div");
