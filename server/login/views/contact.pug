@@ -59,7 +59,7 @@ header
 .container.a-custom-container
   #modalContactForm.modal.fade(tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true')
   // Modal: Contact form
-  .modal-dialog.cascading-modal(role='document')
+  .modal-dialog.cascading-modal(role='document' style="margin-top: 5%;")
     // Content
     .modal-content
       // Header
@@ -70,40 +70,47 @@ header
         button.close.waves-effect.waves-light(type='button' data-dismiss='modal' aria-label='Close')
           span(aria-hidden='true') &times;
       // Body
-      .modal-body
+      .modal-body#modal-body
         // Material input name
         .md-form.form-sm
-          i.fa.fa-envelope.prefix
-          input#materialFormNameModalEx1.form-control.form-control-sm(type='text')
+          i.fa.fa-user.prefix
+          input#materialFormNameModalEx1.form-control.form-control-sm.input-value(type='text' name="name" oninput="validateField(this)")
           label(for='materialFormNameModalEx1') Your name
+          span.error-valid(style="display:none;  color: red; font-size: 12px; padding-left: 33px;") Enter your name
         // Material input email
         .md-form.form-sm
-          i.fa.fa-lock.prefix
-          input#materialFormEmailModalEx1.form-control.form-control-sm(type='text')
+          i.fa.fa-envelope.prefix
+          input#materialFormEmailModalEx1.form-control.form-control-sm.input-value(type='email' name="email" oninput="validateField(this)")
           label(for='materialFormEmailModalEx1') Your email
+          span.error-valid(style="display:none; color: red; font-size: 12px; padding-left: 33px;") Enter a valid email address
         // Material input subject
         .md-form.form-sm
           i.fa.fa-tag.prefix
-          input#materialFormSubjectModalEx1.form-control.form-control-sm(type='text')
+          input#materialFormSubjectModalEx1.form-control.form-control-sm.input-value(type='text' name="subject" oninput="validateField(this)")
           label(for='materialFormSubjectModalEx1') Subject
+          span.error-valid(style="display:none; color: red; font-size: 12px; padding-left: 33px;") Enter a subject
         // Material textarea message
         .md-form.form-sm
           i.fa.fa-pencil-alt.prefix
-          textarea#materialFormMessageModalEx1.md-textarea.form-control(type='text')
+          textarea#materialFormMessageModalEx1.md-textarea.form-control.input-value(type='text' name="message" oninput="validateField(this)")
           label(for='materialFormMessageModalEx1') Your message
+          span.error-valid(style="display:none; color: red; font-size: 12px; padding-left: 33px;") Enter your message
         .text-center.mt-4.mb-2
-          button.btn.white-text(style="background-color: #058db5;")
+          button.btn.white-text.z-depth-2(style="background-color: #058db5;" onclick="submitForm()")
             | Send
             i.fa.fa-send.ml-2
+      #confirmation-body.md-form(style="display: none")
+        p(style="text-align: center;") Your message was sent. Thank you!
+        
     // /.Content
   // /Modal: Contact form
-footer(style="position: relative; bottom: 0")
+footer(style="position: fixed; bottom: 0")
   .a-copyright
     p.text-center(style="margin-bottom: 0") &copy;2019 Jose Valadez
   p(style='text-align:center;')
     a(href='https://www.linkedin.com/in/jose-valadez-43038b188/' target='_blank')
       img(alt='' src='/static/images/linked.svg' style='height:20px; width:20px')
-
+script(src='/static/contact.js')
 script(type='text/javascript' src='/static/js/jquery-3.4.1.min.js')
 // Bootstrap tooltips
 script(type='text/javascript' src='/static/js/popper.min.js')
