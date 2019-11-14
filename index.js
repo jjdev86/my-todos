@@ -93,8 +93,6 @@ const getId = async (req, res, next) => {
 };
 
 app.use('/static', express.static(path.join(__dirname, 'client/dist')));
-// app.use(express.static(path.join(__dirname, '/client/dist')));
-// app.use('/static', express.static(path.join(__dirname, './server/login/public/stylesheets')))
 
 // app.use('/images')
 app.use(session(sess));
@@ -147,14 +145,13 @@ app.post("/add-todo", async (req, res) => {
   // console.log(req._iduser, `from 'add-todo`)
   req.body.userId = req._iduser[0]._id;
   req.body.username = req._iduser[0].username;
-  console.log(req.body, `body of the add todo`)
+
   const todo = await addTodo(req.body);
-  console.log(todo, `after todo was created`);
   res.status(200).send(todo);
 });
 // Edit todo
 app.patch("/edit-todo", async (req, res) => {
-  console.log(req.body);
+
   const update = await editTodo(req.body);
   res.status(200).send(update);
 });
